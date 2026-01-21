@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerak Jatuh Bebas - Kelompok 1_XI-2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding-top: 70px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-bottom: 40px;
+        }
+        .container-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2c3e50, #4a6583);
+            padding: 12px 25px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-title {
+            font-size: 1.4rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 22px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 10px 0;
+            min-width: 180px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .nav-menu.active {
+            display: block;
+        }
+
+        .nav-item {
+            padding: 10px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            display: block;
+            transition: all 0.2s;
+        }
+        .nav-item:hover {
+            background: #e3f2fd;
+            color: #3498db;
+            transform: translateX(5px);
+        }
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6583);
+            color: white;
+            padding: 40px 50px;
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .team-section {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px auto 0;
+            max-width: 700px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .team-title {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #ffd700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            font-weight: 600;
+        }
+        .profiles-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            display: inline-block;
+            margin: 16px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .profiles-button:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        .profiles-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+        .profiles-button:hover::before {
+            left: 100%;
+        }
+        .content {
+            display: flex;
+            padding: 40px 50px;
+            gap: 40px;
+            min-height: 600px;
+        }
+        .controls {
+            flex: 1;
+            min-width: 400px;
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        .simulation {
+            flex: 2;
+            min-width: 600px;
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            height: 600px;
+            border: 1px solid #e9ecef;
+        }
+        .section-title {
+            font-size: 1.7rem;
+            color: #2c3e50;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 600;
+        }
+        .input-group {
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: 600;
+            margin-top: 16px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        .results {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 12px;
+            border-left: 6px solid #2196f3;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+        }
+        .result-title {
+            font-size: 1.5rem;
+            color: #1565c0;
+            margin-bottom: 16px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .result-item {
+            margin-bottom: 16px;
+            font-size: 18px;
+            padding: 12px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .result-label {
+            font-weight: 700;
+            color: #0d47a1;
+            display: inline-block;
+            min-width: 180px;
+        }
+        .result-value {
+            font-weight: 600;
+            color: #1976d2;
+        }
+        .formula {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 6px solid #ffc107;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+        }
+        .formula-title {
+            font-weight: 700;
+            color: #ff9800;
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        .formula-title::before {
+            content: '📌';
+            margin-right: 8px;
+        }
+        .formula-content {
+            font-family: 'Courier New', monospace;
+            background: rgba(255,255,255,0.7);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 18px;
+            line-height: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .formula-content .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .formula-content .formula-section {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed #ffd54f;
+        }
+        .helicopter-container {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 170px;
+            height: 85px;
+            z-index: 10;
+        }
+        .helicopter-body {
+            position: relative;
+            width: 120px;
+            height: 48px;
+            background: #3498db;
+            border-radius: 20px 20px 8px 8px;
+            margin: 0 auto;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transform: rotate(-5deg);
+        }
+        .helicopter-nose {
+            position: absolute;
+            left: -22px;
+            top: 8px;
+            width: 40px;
+            height: 30px;
+            background: #2980b9;
+            border-radius: 50% 0 0 50%;
+            box-shadow: inset -4px 0 8px rgba(0,0,0,0.1);
+        }
+        .helicopter-window {
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            width: 22px;
+            height: 18px;
+            background: #b3e5fc;
+            border-radius: 50%;
+            border: 2px solid #1565c0;
+        }
+        .helicopter-tail {
+            position: absolute;
+            right: -42px;
+            top: 17px;
+            width: 50px;
+            height: 13px;
+            background: #3498db;
+            border-radius: 7px;
+        }
+        .helicopter-tail-fin {
+            position: absolute;
+            right: -48px;
+            top: -8px;
+            width: 22px;
+            height: 26px;
+            background: #2980b9;
+            border-radius: 4px;
+        }
+        .main-rotor-container {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 170px;
+            height: 7px;
+            z-index: 5;
+        }
+        .main-rotor {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 170px;
+            height: 7px;
+            background: #2c3e50;
+            border-radius: 3px;
+            animation: rotateMainRotorHorizontal 0.4s linear infinite;
+            transform-origin: center;
+            box-shadow: 0 0 8px rgba(0,0,0,0.3);
+        }
+        .main-rotor::before,
+        .main-rotor::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            width: 35px;
+            height: 12px;
+            background: #2c3e50;
+            border-radius: 6px;
+        }
+        .main-rotor::before {
+            left: 0;
+        }
+        .main-rotor::after {
+            right: 0;
+        }
+        .tail-rotor-container {
+            position: absolute;
+            right: -55px;
+            top: 8px;
+            width: 25px;
+            height: 25px;
+        }
+        .tail-rotor {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5px;
+            height: 25px;
+            background: #2c3e50;
+            border-radius: 3px;
+            animation: rotateTailRotorVertical 0.3s linear infinite;
+            transform-origin: center;
+            box-shadow: 0 0 6px rgba(0,0,0,0.3);
+        }
+        .tail-rotor::before,
+        .tail-rotor::after {
+            content: '';
+            position: absolute;
+            background: #2c3e50;
+            border-radius: 2px;
+        }
+        .tail-rotor::before {
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 5px;
+        }
+        .tail-rotor::after {
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 5px;
+        }
+        .bomb {
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            background: #333;
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            display: block;
+            border: 2px solid #111;
+        }
+        .bomb::before {
+            content: '';
+            position: absolute;
+            top: 7px;
+            left: 7px;
+            width: 20px;
+            height: 20px;
+            background: #e74c3c;
+            border-radius: 50%;
+            box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3);
+        }
+        .bomb::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: inset -1px -1px 1px rgba(0,0,0,0.2);
+        }
+        .bomb-fuse {
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            width: 5px;
+            height: 20px;
+            background: #8B4513;
+            border-radius: 2px;
+            z-index: 10;
+            box-shadow: 0 0 4px rgba(0,0,0,0.3);
+        }
+        .bomb-fuse::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 1px;
+            width: 3px;
+            height: 10px;
+            background: #f1c40f;
+            border-radius: 2px;
+            animation: flicker 0.5s infinite alternate;
+            box-shadow: 0 0 8px #f1c40f;
+        }
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(to bottom, #8bc34a, #4caf50);
+            border-top: 4px solid #388e3c;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .ground::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            width: 100%;
+            height: 16px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+        }
+        .info-panel {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            min-width: 250px;
+            z-index: 30;
+            border: 2px solid #e0e0e0;
+        }
+        .info-title {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+            font-weight: 600;
+        }
+        .info-item {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 6px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #2c3e50;
+            display: inline-block;
+            min-width: 90px;
+        }
+        .info-value {
+            font-weight: 500;
+            color: #3498db;
+        }
+        @keyframes rotateMainRotorHorizontal {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+        @keyframes rotateTailRotorVertical {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes helicopterFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-6px); }
+        }
+        @keyframes flicker {
+            0% { opacity: 0.7; box-shadow: 0 0 5px #f1c40f; }
+            100% { opacity: 1; box-shadow: 0 0 12px #f1c40f, 0 0 20px #ff9800; }
+        }
+        .helicopter-container {
+            animation: helicopterFloat 2.5s ease-in-out infinite;
+        }
+        @media (max-width: 1200px) {
+            .content {
+                flex-direction: column;
+                padding: 30px;
+            }
+            .controls, .simulation {
+                min-width: auto;
+                height: auto;
+            }
+            .simulation {
+                min-height: 500px;
+            }
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px 60px;
+                padding-top: 70px;
+            }
+            header {
+                padding: 25px 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            .content {
+                padding: 20px;
+            }
+            .controls, .simulation {
+                padding: 20px;
+            }
+            .section-title {
+                font-size: 1.4rem;
+            }
+            .profiles-button {
+                font-size: 1.1rem;
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-navbar">
+        <a href="index.html" class="header-title">&lt;Aregy/&gt;</a>
+
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-menu" id="navMenu">
+            <a href="1gjb.html" class="nav-item">Gerak Jatuh Bebas</a>
+            <a href="2rotasi.html" class="nav-item">Rotasi Geometri</a>
+            <a href="3matrix.html" class="nav-item">Operasi Matriks</a>
+        </nav>
+    </div>
+
+
+    <div class="container">
+        <header>
+            <h1>Simulasi Gerak Jatuh Bebas</h1>
+            <p class="subtitle">Hai, Sobat Voltrix! Yuk, pahami materi pelajaran fisika tentang <b>Gerak Jatuh Bebas</b> dengan ilustrasi interaktif bom yang dijatuhkan dari helikopter😀💥.</p>
+            <div class="team-section">
+                <h2 class="team-title">💻KELOMPOK SETUNGGAL🤖</h2>
+                <a href="1profiles.html" class="profiles-button">👤 Lihat Profil Anggota Kelompok</a>
+            </div>
+        </header>
+        <div class="content">
+            <div class="controls">
+                <h2 class="section-title">Parameter Simulasi</h2>
+                <div class="input-group">
+                    <label for="height">Ketinggian Helikopter (m):</label>
+                    <input type="number" id="height" value="100" min="1" max="500" step="1" placeholder="Masukkan ketinggian...">
+                </div>
+                <div class="input-group">
+                    <label for="gravity">Percepatan Gravitasi (m/s²):</label>
+                    <input type="number" id="gravity" value="9.8" min="1" max="20" step="0.1" placeholder="Masukkan percepatan gravitasi...">
+                </div>
+                <button id="calculateBtn">🚀 Hitung & Mulai Simulasi</button>
+
+                <div class="results">
+                    <h3 class="result-title">📊 Hasil Perhitungan</h3>
+                    <div class="result-item">
+                        <span class="result-label">Waktu Jatuh:</span>
+                        <span class="result-value" id="resultTime">4.52</span> detik
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Kecepatan Akhir:</span>
+                        <span class="result-value" id="resultVelocity">44.30</span> m/s
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Jarak Tempuh:</span>
+                        <span class="result-value" id="resultDistance">100.00</span> meter
+                    </div>
+                </div>
+
+                <div class="formula">
+                    <div class="formula-title">Rumus Gerak Jatuh Bebas</div>
+                    <div class="formula-content">
+                        <div class="formula-section">
+                            <strong>Rumus Ketinggian:</strong><br>
+                            h = ½ × <span class="highlight">g</span> × <span class="highlight">t</span>²
+                        </div>
+                        <div class="formula-section">
+                            <strong>Rumus Kecepatan Akhir:</strong><br>
+                            v = <span class="highlight">g</span> × <span class="highlight">t</span><br>
+                            atau<br>
+                            v = √(2 × <span class="highlight">g</span> × <span class="highlight">h</span>)
+                        </div>
+                        <div>
+                            <strong>Dimana:</strong><br>
+                            h = ketinggian (m)<br>
+                            g = gravitasi (m/s²)<br>
+                            t = waktu (s)<br>
+                            v = kecepatan akhir (m/s)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="simulation">
+                <div class="helicopter-container" id="helicopter">
+                    <div class="helicopter-body">
+                        <div class="helicopter-nose"></div>
+                        <div class="helicopter-window"></div>
+                        <div class="helicopter-tail"></div>
+                        <div class="helicopter-tail-fin"></div>
+                    </div>
+                    <div class="main-rotor-container">
+                        <div class="main-rotor"></div>
+                    </div>
+                    <div class="tail-rotor-container">
+                        <div class="tail-rotor"></div>
+                    </div>
+                </div>
+                <div class="bomb" id="bomb">
+                    <div class="bomb-fuse"></div>
+                </div>
+                <div class="ground" id="ground"></div>
+                <div class="info-panel">
+                    <h3 class="info-title">📡 Data Real-time</h3>
+                    <div class="info-item">
+                        <span class="info-label">Waktu:</span>
+                        <span class="info-value" id="simTime">0.00</span> s
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Ketinggian:</span>
+                        <span class="info-value" id="simHeight">0.00</span> m
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Kecepatan:</span>
+                        <span class="info-value" id="simVelocity">0.00</span> m/s
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const navMenu = document.getElementById('navMenu');
+            const spans = hamburgerBtn.querySelectorAll('span');
+
+            hamburgerBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+
+                if (navMenu.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                } else {
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!hamburgerBtn.contains(e.target) && !navMenu.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    spans.forEach(span => {
+                        span.style.transform = 'none';
+                        span.style.opacity = '1';
+                    });
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const heightInput = document.getElementById('height');
+            const gravityInput = document.getElementById('gravity');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const bomb = document.getElementById('bomb');
+            const helicopter = document.getElementById('helicopter');
+            const simTime = document.getElementById('simTime');
+            const simHeight = document.getElementById('simHeight');
+            const simVelocity = document.getElementById('simVelocity');
+            const resultTime = document.getElementById('resultTime');
+            const resultVelocity = document.getElementById('resultVelocity');
+            const resultDistance = document.getElementById('resultDistance');
+            let animationId = null;
+            let isAnimating = false;
+            let bombStartPosition = { top: 0, left: 0 };
+
+            positionHelicopterAndBomb();
+
+            function positionHelicopterAndBomb() {
+                const simulationContainer = document.querySelector('.simulation');
+                const simulationHeight = simulationContainer.clientHeight - 70;
+                const maxHeight = 500;
+                const currentHeight = parseFloat(heightInput.value);
+                const heightRatio = Math.min(currentHeight / maxHeight, 1);
+                const topPosition = 30 + (1 - heightRatio) * (simulationHeight - 130);
+                helicopter.style.top = `${topPosition}px`;
+                bombStartPosition = {
+                    top: topPosition + 80,
+                    left: simulationContainer.offsetWidth / 2 - 17
+                };
+                bomb.style.top = `${bombStartPosition.top}px`;
+                bomb.style.left = `${bombStartPosition.left}px`;
+                bomb.style.display = 'block';
+            }
+
+            function calculateTime() {
+                const height = parseFloat(heightInput.value);
+                const gravity = parseFloat(gravityInput.value);
+                const time = Math.sqrt((2 * height) / gravity);
+                const finalVelocity = gravity * time;
+                resultTime.textContent = time.toFixed(2);
+                resultVelocity.textContent = finalVelocity.toFixed(2);
+                resultDistance.textContent = height.toFixed(2);
+                return { time, finalVelocity, height };
+            }
+
+            function startAnimation() {
+                if (isAnimating && animationId) {
+                    cancelAnimationFrame(animationId);
+                }
+                isAnimating = true;
+                const { time, finalVelocity, height } = calculateTime();
+                const startTime = performance.now();
+                const simulationDuration = 3500;
+                const simulationContainer = document.querySelector('.simulation');
+                const groundPosition = simulationContainer.clientHeight - 70;
+
+                bomb.style.top = `${bombStartPosition.top}px`;
+                bomb.style.left = `${bombStartPosition.left}px`;
+                bomb.style.display = 'block';
+
+                function animate(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / simulationDuration, 1);
+                    const currentSimTime = progress * time;
+                    const currentHeight = height - (0.5 * parseFloat(gravityInput.value) * Math.pow(currentSimTime, 2));
+                    const currentVelocity = parseFloat(gravityInput.value) * currentSimTime;
+
+                    simTime.textContent = currentSimTime.toFixed(2);
+                    simHeight.textContent = currentHeight.toFixed(2);
+                    simVelocity.textContent = currentVelocity.toFixed(2);
+
+                    const fallDistance = height - currentHeight;
+                    const totalFallDistance = height;
+                    const fallRatio = fallDistance / totalFallDistance;
+                    const currentPosition = bombStartPosition.top + fallRatio * (groundPosition - bombStartPosition.top - 34);
+                    bomb.style.top = `${currentPosition}px`;
+
+                    if (progress < 1) {
+                        animationId = requestAnimationFrame(animate);
+                    } else {
+                        bomb.style.top = `${groundPosition - 34}px`;
+                        isAnimating = false;
+                    }
+                }
+                animationId = requestAnimationFrame(animate);
+            }
+
+            calculateBtn.addEventListener('click', function() {
+                calculateTime();
+                positionHelicopterAndBomb();
+                startAnimation();
+            });
+
+            heightInput.addEventListener('input', function() {
+                setTimeout(() => {
+                    positionHelicopterAndBomb();
+                    calculateTime();
+                }, 10);
+            });
+
+            calculateTime();
+            positionHelicopterAndBomb();
+
+            window.addEventListener('resize', function() {
+                setTimeout(() => {
+                    positionHelicopterAndBomb();
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
+

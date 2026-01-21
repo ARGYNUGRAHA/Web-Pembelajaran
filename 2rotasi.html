@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotasi Geometri - Kelompok 3_XI-2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding-top: 70px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-bottom: 40px;
+        }
+        
+        /* Fixed Navbar with Hamburger */
+        .container-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2c3e50, #4a6583);
+            padding: 15px 30px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-title {
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 22px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+            appearance: none;
+        }
+        
+        .hamburger span {
+            width: 100%;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+            transform-origin: center;
+        }
+        
+        .nav-menu {
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 10px 0;
+            min-width: 180px;
+            display: none;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nav-menu.active {
+            display: block;
+        }
+        
+        .nav-item {
+            padding: 10px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: block;
+            transition: all 0.2s;
+            border-radius: 5px;
+            margin: 2px 0;
+        }
+        
+        .nav-item:hover {
+            background: #e3f2fd;
+            color: #3498db;
+            transform: translateX(5px);
+        }
+        
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6583);
+            color: white;
+            padding: 40px 50px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .team-section {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px auto 0;
+            max-width: 700px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .team-title {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #ffd700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            font-weight: 600;
+        }
+        
+        .profiles-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            display: inline-block;
+            margin: 16px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profiles-button:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        
+        .profiles-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .profiles-button:hover::before {
+            left: 100%;
+        }
+        
+        .content {
+            display: flex;
+            padding: 40px 50px;
+            gap: 40px;
+            min-height: 600px;
+        }
+        
+        .controls {
+            flex: 1;
+            min-width: 400px;
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .simulation-section {
+            flex: 2;
+            min-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .simulation {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            height: 600px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .zoom-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f0f4f8;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #d1d9e6;
+        }
+        
+        .zoom-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .zoom-slider-container label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 80px;
+        }
+        
+        .zoom-slider {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #d1d9e6;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .zoom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.4);
+            border: 2px solid white;
+        }
+        
+        .zoom-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #3498db;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .info-panel {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            min-width: 250px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .info-title {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+            font-weight: 600;
+        }
+        
+        .info-item {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 6px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #2c3e50;
+            display: inline-block;
+            min-width: 90px;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            color: #3498db;
+        }
+        
+        .section-title {
+            font-size: 1.7rem;
+            color: #2c3e50;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 600;
+        }
+        
+        .input-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        
+        .polygon-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .polygon-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .add-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
+        
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        .remove-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .remove-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+        }
+        
+        .results {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 12px;
+            border-left: 6px solid #2196f3;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+        }
+        
+        .result-title {
+            font-size: 1.5rem;
+            color: #1565c0;
+            margin-bottom: 16px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .result-item {
+            margin-bottom: 16px;
+            font-size: 18px;
+            padding: 12px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .result-label {
+            font-weight: 700;
+            color: #0d47a1;
+            display: inline-block;
+            min-width: 160px;
+        }
+        
+        .result-value {
+            font-weight: 600;
+            color: #1976d2;
+        }
+        
+        .formula {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 6px solid #ffc107;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+        }
+        
+        .formula-title {
+            font-weight: 700;
+            color: #ff9800;
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .formula-title::before {
+            content: '📌';
+            margin-right: 8px;
+        }
+        
+        .formula-content {
+            font-family: 'Courier New', monospace;
+            background: rgba(255,255,255,0.7);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 18px;
+            line-height: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .formula-content .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .formula-content .formula-section {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed #ffd54f;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            cursor: grab;
+        }
+        
+        canvas:active {
+            cursor: grabbing;
+        }
+        
+        .point-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .point-input-group {
+            margin-bottom: 0;
+        }
+        
+        .point-input-group label {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+        
+        .line-type-group {
+            margin-bottom: 16px;
+        }
+        
+        .line-type-group label {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .line-equation-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+        
+        .line-input-group {
+            margin-bottom: 0;
+        }
+        
+        .line-input-group label {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+        
+        .polygon-inputs {
+            margin-bottom: 16px;
+        }
+        
+        .polygon-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        
+        .polygon-table th, .polygon-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        
+        .polygon-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .polygon-table input {
+            width: 60px;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .center-rotation-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .center-input-group {
+            margin-bottom: 0;
+        }
+        
+        .center-input-group label {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+        
+        @media (max-width: 1200px) {
+            .content {
+                flex-direction: column;
+                padding: 30px;
+            }
+            
+            .controls, .simulation-section {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .simulation {
+                min-height: 500px;
+                height: auto;
+            }
+            
+            .point-inputs, .center-rotation-inputs, .line-equation-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px 60px;
+                padding-top: 70px;
+            }
+            
+            header {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .controls, .simulation-section {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .profiles-button {
+                font-size: 1.1rem;
+                padding: 12px 24px;
+            }
+            
+            input, select, .polygon-btn {
+                font-size: 14px;
+                padding: 12px 14px;
+            }
+            
+            .polygon-table input {
+                width: 50px;
+                padding: 6px;
+                font-size: 12px;
+            }
+            
+            .zoom-controls {
+                padding: 12px;
+            }
+            
+            .zoom-slider {
+                height: 6px;
+            }
+            
+            .zoom-slider::-webkit-slider-thumb {
+                width: 18px;
+                height: 18px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .container-navbar {
+                padding: 12px 20px;
+            }
+            
+            .header-title {
+                font-size: 1.3rem;
+            }
+            
+            .hamburger {
+                width: 20px;
+                height: 16px;
+            }
+            
+            .hamburger span {
+                height: 2px;
+            }
+            
+            .nav-menu {
+                top: 50px;
+                right: 20px;
+                width: 160px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Navbar with Hamburger Menu -->
+    <div class="container-navbar">
+        <a href="index.html" class="header-title">&lt;Aregy/&gt;</a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-menu" id="navMenu">
+            <a href="1gjb.html" class="nav-item">Gerak Jatuh Bebas</a>
+            <a href="2rotasi.html" class="nav-item">Rotasi Geometri</a>
+            <a href="3matrix.html" class="nav-item">Operasi Matriks</a>
+        </nav>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>Simulasi Rotasi Geometri</h1>
+            <p class="subtitle">Hai, Sobat Voltrix! Yuk, pahami materi pelajaran matematika tentang <b>Rotasi Geometri</b> dengan ilustrasi interaktif yang memungkinkan kamu untuk merotasi titik, garis, dan bangun datar terhadap titik pusat yang bisa kamu tentukan sendiri! 📐🔄</p>
+            <div class="team-section">
+                <h2 class="team-title">😝KELOMPOK TRIPLE KILL🤙🏻</h2>
+                <a href="2profiles.html" class="profiles-button">👤 Lihat Profil Anggota Kelompok</a>
+            </div>
+        </header>
+        <div class="content">
+            <div class="controls">
+                <h2 class="section-title">Parameter Rotasi</h2>
+                <div class="input-group">
+                    <label for="objectType">Jenis Objek:</label>
+                    <select id="objectType">
+                        <option value="point">Titik</option>
+                        <option value="line">Garis</option>
+                        <option value="polygon">Bangun Datar</option>
+                    </select>
+                </div>
+                
+                <!-- Point inputs -->
+                <div id="pointInputs" class="point-inputs">
+                    <div class="point-input-group">
+                        <label for="pointX">Koordinat X Titik:</label>
+                        <input type="number" id="pointX" value="3" step="1" placeholder="X">
+                    </div>
+                    <div class="point-input-group">
+                        <label for="pointY">Koordinat Y Titik:</label>
+                        <input type="number" id="pointY" value="2" step="1" placeholder="Y">
+                    </div>
+                </div>
+                
+                <!-- Line inputs -->
+                <div id="lineInputs" style="display: none;">
+                    <div class="line-type-group">
+                        <label for="lineType">Bentuk Persamaan:</label>
+                        <select id="lineType">
+                            <option value="slope">y = mx + c</option>
+                            <option value="standard">ax + by + c = 0</option>
+                        </select>
+                    </div>
+                    <div id="slopeForm" class="line-equation-inputs">
+                        <div class="line-input-group">
+                            <label for="lineM">Gradien (m):</label>
+                            <input type="number" id="lineM" value="1" step="0.1" placeholder="m">
+                        </div>
+                        <div class="line-input-group">
+                            <label for="lineC">Konstanta (c):</label>
+                            <input type="number" id="lineC" value="0" step="0.1" placeholder="c">
+                        </div>
+                    </div>
+                    <div id="standardForm" class="line-equation-inputs" style="display: none;">
+                        <div class="line-input-group">
+                            <label for="lineA">Koefisien a:</label>
+                            <input type="number" id="lineA" value="1" step="0.1" placeholder="a">
+                        </div>
+                        <div class="line-input-group">
+                            <label for="lineB">Koefisien b:</label>
+                            <input type="number" id="lineB" value="-1" step="0.1" placeholder="b">
+                        </div>
+                        <div class="line-input-group">
+                            <label for="lineC2">Konstanta c:</label>
+                            <input type="number" id="lineC2" value="0" step="0.1" placeholder="c">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Polygon inputs -->
+                <div id="polygonInputs" style="display: none;">
+                    <label>Koordinat Titik Bangun Datar:</label>
+                    <table class="polygon-table">
+                        <thead>
+                            <tr>
+                                <th>Titik ke-</th>
+                                <th>X</th>
+                                <th>Y</th>
+                            </tr>
+                        </thead>
+                        <tbody id="polygonTableBody">
+                            <tr>
+                                <td>1</td>
+                                <td><input type="number" class="poly-x" value="-2" step="1"></td>
+                                <td><input type="number" class="poly-y" value="-2" step="1"></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><input type="number" class="poly-x" value="2" step="1"></td>
+                                <td><input type="number" class="poly-y" value="-2" step="1"></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><input type="number" class="poly-x" value="0" step="1"></td>
+                                <td><input type="number" class="poly-y" value="2" step="1"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="polygon-btns">
+                        <button id="addPointBtn" class="polygon-btn add-btn">➕ Tambah Titik</button>
+                        <button id="removePointBtn" class="polygon-btn remove-btn">➖ Kurangi Titik</button>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="angle">Sudut Rotasi (derajat):</label>
+                    <input type="number" id="angle" value="90" min="-360" max="360" step="15" placeholder="Masukkan sudut rotasi...">
+                </div>
+                
+                <div class="input-group">
+                    <label>Pusat Rotasi:</label>
+                    <div class="center-rotation-inputs">
+                        <div class="center-input-group">
+                            <label for="centerX">Koordinat X:</label>
+                            <input type="number" id="centerX" value="0" min="-10" max="10" step="1" placeholder="X">
+                        </div>
+                        <div class="center-input-group">
+                            <label for="centerY">Koordinat Y:</label>
+                            <input type="number" id="centerY" value="0" min="-10" max="10" step="1" placeholder="Y">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results">
+                    <h3 class="result-title">📊 Hasil Rotasi</h3>
+                    <div class="result-item">
+                        <span class="result-label">Objek Asli:</span>
+                        <span class="result-value" id="originalObject">(3,2)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Objek Hasil:</span>
+                        <span class="result-value" id="rotatedObject">(-2,3)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Pusat Rotasi:</span>
+                        <span class="result-value" id="rotationCenter">(0,0)</span>
+                    </div>
+                </div>
+                
+                <div class="formula">
+                    <div class="formula-title">Rumus Rotasi Geometri</div>
+                    <div class="formula-content">
+                        <div class="formula-section">
+                            <strong>Rumus Umum Rotasi:</strong><br>
+                            x' = (<span class="highlight">x</span> - a)cosθ - (<span class="highlight">y</span> - b)sinθ + a<br>
+                            y' = (<span class="highlight">x</span> - a)sinθ + (<span class="highlight">y</span> - b)cosθ + b
+                        </div>
+                        <div class="formula-section">
+                            <strong>Rotasi Khusus:</strong><br>
+                            • 90°: (x,y) → (-y,x)<br>
+                            • 180°: (x,y) → (-x,-y)<br>
+                            • 270°: (x,y) → (y,-x)
+                        </div>
+                        <div>
+                            <strong>Dimana:</strong><br>
+                            (x,y) = koordinat asli<br>
+                            (x',y') = koordinat hasil rotasi<br>
+                            (a,b) = pusat rotasi<br>
+                            θ = sudut rotasi
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="simulation-section">
+                <div class="simulation">
+                    <canvas id="rotationCanvas"></canvas>
+                </div>
+                
+                <div class="zoom-controls">
+                    <label>🔍 Kontrol Zoom</label>
+                    <div class="zoom-slider-container">
+                        <label for="zoomSlider">Zoom:</label>
+                        <input type="range" id="zoomSlider" min="30" max="300" value="100" class="zoom-slider">
+                        <span id="zoomValue" class="zoom-value">1.0x</span>
+                    </div>
+                </div>
+                
+                <div class="info-panel">
+                    <h3 class="info-title">📡 Informasi Rotasi</h3>
+                    <div class="info-item">
+                        <span class="info-label">Sudut:</span>
+                        <span class="info-value" id="simAngle">90°</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Pusat X:</span>
+                        <span class="info-value" id="simCenterX">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Pusat Y:</span>
+                        <span class="info-value" id="simCenterY">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Jenis Objek:</span>
+                        <span class="info-value" id="simObjectType">Titik</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Zoom:</span>
+                        <span class="info-value" id="simZoom">1.0x</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger Menu Functionality
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const navMenu = document.getElementById('navMenu');
+            const spans = hamburgerBtn.querySelectorAll('span');
+            
+            hamburgerBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+                
+                // Animate hamburger icon
+                if (navMenu.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                    hamburgerBtn.setAttribute('aria-expanded', 'true');
+                } else {
+                    spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!hamburgerBtn.contains(event.target) && !navMenu.contains(event.target) && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Close menu when resizing to larger screen
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 600 && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Simulation Code
+            const canvas = document.getElementById('rotationCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Get DOM elements
+            const objectTypeSelect = document.getElementById('objectType');
+            const pointInputs = document.getElementById('pointInputs');
+            const lineInputs = document.getElementById('lineInputs');
+            const polygonInputs = document.getElementById('polygonInputs');
+            const lineTypeSelect = document.getElementById('lineType');
+            const slopeForm = document.getElementById('slopeForm');
+            const standardForm = document.getElementById('standardForm');
+            const polygonTableBody = document.getElementById('polygonTableBody');
+            const angleInput = document.getElementById('angle');
+            const centerXInput = document.getElementById('centerX');
+            const centerYInput = document.getElementById('centerY');
+            const zoomSlider = document.getElementById('zoomSlider');
+            const zoomValue = document.getElementById('zoomValue');
+            const addPointBtn = document.getElementById('addPointBtn');
+            const removePointBtn = document.getElementById('removePointBtn');
+            const originalObject = document.getElementById('originalObject');
+            const rotatedObject = document.getElementById('rotatedObject');
+            const rotationCenter = document.getElementById('rotationCenter');
+            const simAngle = document.getElementById('simAngle');
+            const simCenterX = document.getElementById('simCenterX');
+            const simCenterY = document.getElementById('simCenterY');
+            const simObjectType = document.getElementById('simObjectType');
+            const simZoom = document.getElementById('simZoom');
+            
+            // All input elements that should trigger live preview
+            const allInputs = [
+                objectTypeSelect,
+                document.getElementById('pointX'),
+                document.getElementById('pointY'),
+                lineTypeSelect,
+                document.getElementById('lineM'),
+                document.getElementById('lineC'),
+                document.getElementById('lineA'),
+                document.getElementById('lineB'),
+                document.getElementById('lineC2'),
+                angleInput,
+                centerXInput,
+                centerYInput
+            ];
+            
+            // Canvas state
+            let zoomLevel = 1.0;
+            const minZoom = 0.3;
+            const maxZoom = 3.0;
+            
+            // Set canvas size
+            function resizeCanvas() {
+                const simulationContainer = document.querySelector('.simulation');
+                canvas.width = simulationContainer.clientWidth - 64;
+                canvas.height = simulationContainer.clientHeight - 64;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Coordinate system constants
+            const BASE_GRID_SIZE = 30;
+            const AXIS_COLOR = '#666';
+            const GRID_COLOR = '#ddd';
+            const ORIGINAL_COLOR = '#3498db';
+            const ROTATED_COLOR = '#e74c3c';
+            const CENTER_COLOR = '#2ecc71';
+            
+            // Show/hide input fields based on object type
+            function updateInputFields() {
+                const selectedType = objectTypeSelect.value;
+                pointInputs.style.display = selectedType === 'point' ? 'grid' : 'none';
+                lineInputs.style.display = selectedType === 'line' ? 'block' : 'none';
+                polygonInputs.style.display = selectedType === 'polygon' ? 'block' : 'none';
+                updateLivePreview();
+            }
+            
+            objectTypeSelect.addEventListener('change', updateInputFields);
+            
+            // Show/hide line equation forms
+            function updateLineForms() {
+                const selectedType = lineTypeSelect.value;
+                slopeForm.style.display = selectedType === 'slope' ? 'grid' : 'none';
+                standardForm.style.display = selectedType === 'standard' ? 'grid' : 'none';
+                updateLivePreview();
+            }
+            
+            lineTypeSelect.addEventListener('change', updateLineForms);
+            
+            // Add/remove polygon points
+            addPointBtn.addEventListener('click', function() {
+                const rows = polygonTableBody.children.length;
+                if (rows < 6) {
+                    const newRow = document.createElement('tr');
+                    const rowIndex = rows + 1;
+                    newRow.innerHTML = `
+                        <td>${rowIndex}</td>
+                        <td><input type="number" class="poly-x" value="0" step="1"></td>
+                        <td><input type="number" class="poly-y" value="0" step="1"></td>
+                    `;
+                    polygonTableBody.appendChild(newRow);
+                    const newInputs = newRow.querySelectorAll('input');
+                    newInputs.forEach(input => {
+                        input.addEventListener('input', updateLivePreview);
+                    });
+                    updateLivePreview();
+                }
+            });
+            
+            removePointBtn.addEventListener('click', function() {
+                const rows = polygonTableBody.children.length;
+                if (rows > 3) {
+                    polygonTableBody.removeChild(polygonTableBody.lastChild);
+                    const allRows = polygonTableBody.querySelectorAll('tr');
+                    allRows.forEach((row, index) => {
+                        row.cells[0].textContent = index + 1;
+                    });
+                    updateLivePreview();
+                }
+            });
+            
+            // Zoom slider
+            zoomSlider.addEventListener('input', function() {
+                const sliderValue = parseInt(zoomSlider.value);
+                zoomLevel = sliderValue / 100;
+                zoomValue.textContent = `${zoomLevel.toFixed(1)}x`;
+                simZoom.textContent = `${zoomLevel.toFixed(1)}x`;
+                updateLivePreview();
+            });
+            
+            // Convert world coordinates to canvas coordinates with zoom
+            function worldToCanvas(x, y) {
+                const gridSize = BASE_GRID_SIZE * zoomLevel;
+                return {
+                    x: canvas.width / 2 + x * gridSize,
+                    y: canvas.height / 2 - y * gridSize
+                };
+            }
+            
+            // Rotate a point around a center
+            function rotatePoint(point, centerX, centerY, angle) {
+                const rad = angle * Math.PI / 180;
+                const cos = Math.cos(rad);
+                const sin = Math.sin(rad);
+                const dx = point.x - centerX;
+                const dy = point.y - centerY;
+                return {
+                    x: dx * cos - dy * sin + centerX,
+                    y: dx * sin + dy * cos + centerY
+                };
+            }
+            
+            // Format line equation string
+            function getLineEquationString() {
+                const lineType = lineTypeSelect.value;
+                if (lineType === 'slope') {
+                    const m = parseFloat(document.getElementById('lineM').value);
+                    const c = parseFloat(document.getElementById('lineC').value);
+                    let equation = "y = ";
+                    if (m === 1) equation += "x";
+                    else if (m === -1) equation += "-x";
+                    else equation += `${m}x`;
+                    if (c > 0) equation += ` + ${c}`;
+                    else if (c < 0) equation += ` - ${Math.abs(c)}`;
+                    return equation;
+                } else {
+                    const a = parseFloat(document.getElementById('lineA').value);
+                    const b = parseFloat(document.getElementById('lineB').value);
+                    const c = parseFloat(document.getElementById('lineC2').value);
+                    let equation = "";
+                    if (a !== 0) {
+                        if (a === 1) equation += "x";
+                        else if (a === -1) equation += "-x";
+                        else equation += `${a}x`;
+                    }
+                    if (b !== 0) {
+                        if (equation && b > 0) equation += " + ";
+                        else if (b < 0) equation += " - ";
+                        if (Math.abs(b) === 1) equation += "y";
+                        else equation += `${Math.abs(b)}y`;
+                    }
+                    if (c !== 0) {
+                        if (equation && c > 0) equation += " + ";
+                        else if (c < 0) equation += " - ";
+                        equation += Math.abs(c);
+                    }
+                    equation += " = 0";
+                    return equation || "0 = 0";
+                }
+            }
+            
+            // Get two points from line equation for drawing
+            function getLinePointsFromEquation() {
+                const lineType = lineTypeSelect.value;
+                let x1, y1, x2, y2;
+                if (lineType === 'slope') {
+                    const m = parseFloat(document.getElementById('lineM').value);
+                    const c = parseFloat(document.getElementById('lineC').value);
+                    x1 = -5;
+                    y1 = m * x1 + c;
+                    x2 = 5;
+                    y2 = m * x2 + c;
+                } else {
+                    const a = parseFloat(document.getElementById('lineA').value);
+                    const b = parseFloat(document.getElementById('lineB').value);
+                    const c = parseFloat(document.getElementById('lineC2').value);
+                    if (b !== 0) {
+                        x1 = -5;
+                        y1 = -(a * x1 + c) / b;
+                        x2 = 5;
+                        y2 = -(a * x2 + c) / b;
+                    } else if (a !== 0) {
+                        const xVal = -c / a;
+                        x1 = xVal;
+                        y1 = -5;
+                        x2 = xVal;
+                        y2 = 5;
+                    } else {
+                        x1 = -5; y1 = 0; x2 = 5; y2 = 0;
+                    }
+                }
+                return [{x: x1, y: y1}, {x: x2, y: y2}];
+            }
+            
+            // Get rotated line equation string in the same format as user selected
+            function getRotatedLineEquation(originalPoints, rotatedPoints) {
+                const [p1, p2] = rotatedPoints;
+                const dx = p2.x - p1.x;
+                const dy = p2.y - p1.y;
+                // Get the current line type selected by user
+                const lineType = lineTypeSelect.value;
+                if (Math.abs(dx) < 0.001) {
+                    // Vertical line - handle specially for both formats
+                    if (lineType === 'slope') {
+                        return `x = ${p1.x.toFixed(1)}`;
+                    } else {
+                        return `${p1.x.toFixed(1)} = 0`; // This is not standard, but we'll use ax + by + c = 0 format
+                    }
+                } else if (Math.abs(dy) < 0.001) {
+                    // Horizontal line
+                    if (lineType === 'slope') {
+                        return `y = ${p1.y.toFixed(1)}`;
+                    } else {
+                        return `y - ${p1.y.toFixed(1)} = 0`;
+                    }
+                } else {
+                    const m = dy / dx;
+                    const c = p1.y - m * p1.x;
+                    if (lineType === 'slope') {
+                        // Return in y = mx + c format
+                        let equation = "y = ";
+                        if (Math.abs(m - 1) < 0.001) equation += "x";
+                        else if (Math.abs(m + 1) < 0.001) equation += "-x";
+                        else equation += `${m.toFixed(1)}x`;
+                        if (c > 0) equation += ` + ${c.toFixed(1)}`;
+                        else if (c < 0) equation += ` - ${Math.abs(c).toFixed(1)}`;
+                        return equation;
+                    } else {
+                        // Return in ax + by + c = 0 format
+                        // From y = mx + c, we get: mx - y + c = 0
+                        // So a = m, b = -1, c = c
+                        let a = m;
+                        let b = -1;
+                        let constant = c;
+                        // Normalize to avoid decimals when possible
+                        let equation = "";
+                        if (Math.abs(a - 1) < 0.001) equation += "x";
+                        else if (Math.abs(a + 1) < 0.001) equation += "-x";
+                        else if (a !== 0) equation += `${a.toFixed(1)}x`;
+                        if (b !== 0) {
+                            if (equation && b > 0) equation += " + ";
+                            else if (b < 0) equation += " - ";
+                            if (Math.abs(b) === 1) equation += "y";
+                            else equation += `${Math.abs(b)}y`;
+                        }
+                        if (constant !== 0) {
+                            if (equation && constant > 0) equation += " + ";
+                            else if (constant < 0) equation += " - ";
+                            equation += Math.abs(constant).toFixed(1);
+                        }
+                        equation += " = 0";
+                        return equation;
+                    }
+                }
+            }
+            
+            // Draw grid and axes
+            function drawGrid() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const gridSize = BASE_GRID_SIZE * zoomLevel;
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const maxX = Math.ceil(canvas.width / (2 * gridSize)) + 1;
+                const maxY = Math.ceil(canvas.height / (2 * gridSize)) + 1;
+                
+                // Draw grid
+                ctx.strokeStyle = GRID_COLOR;
+                ctx.lineWidth = 1;
+                for (let x = -maxX; x <= maxX; x++) {
+                    const canvasX = centerX + x * gridSize;
+                    ctx.beginPath();
+                    ctx.moveTo(canvasX, 0);
+                    ctx.lineTo(canvasX, canvas.height);
+                    ctx.stroke();
+                }
+                for (let y = -maxY; y <= maxY; y++) {
+                    const canvasY = centerY - y * gridSize;
+                    ctx.beginPath();
+                    ctx.moveTo(0, canvasY);
+                    ctx.lineTo(canvas.width, canvasY);
+                    ctx.stroke();
+                }
+                
+                // Draw axes
+                ctx.strokeStyle = AXIS_COLOR;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, centerY);
+                ctx.lineTo(canvas.width, centerY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(centerX, 0);
+                ctx.lineTo(centerX, canvas.height);
+                ctx.stroke();
+                
+                // Draw axis labels
+                ctx.fillStyle = AXIS_COLOR;
+                ctx.font = `${12 * zoomLevel}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                for (let x = -maxX; x <= maxX; x++) {
+                    if (x !== 0) {
+                        const canvasX = centerX + x * gridSize;
+                        ctx.fillText(x.toString(), canvasX, centerY + 3);
+                    }
+                }
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                for (let y = -maxY; y <= maxY; y++) {
+                    if (y !== 0) {
+                        const canvasY = centerY - y * gridSize;
+                        ctx.fillText(y.toString(), centerX - 3, canvasY);
+                    }
+                }
+            }
+            
+            // Draw object with labels
+            function drawObject(points, color, isRotated = false, label = "") {
+                if (points.length === 1) {
+                    const pos = worldToCanvas(points[0].x, points[0].y);
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, 6 * zoomLevel, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = color;
+                    ctx.font = `${14 * zoomLevel}px Arial`;
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'bottom';
+                    ctx.fillText(`(${points[0].x.toFixed(1)}, ${points[0].y.toFixed(1)})`, pos.x + 8 * zoomLevel, pos.y - 3 * zoomLevel);
+                } else {
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2 * zoomLevel;
+                    ctx.beginPath();
+                    for (let i = 0; i < points.length; i++) {
+                        const pos = worldToCanvas(points[i].x, points[i].y);
+                        if (i === 0) {
+                            ctx.moveTo(pos.x, pos.y);
+                        } else {
+                            ctx.lineTo(pos.x, pos.y);
+                        }
+                    }
+                    if (points.length > 2) {
+                        ctx.closePath();
+                    }
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = color;
+                    for (let i = 0; i < points.length; i++) {
+                        const pos = worldToCanvas(points[i].x, points[i].y);
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, 5 * zoomLevel, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = color;
+                        ctx.font = `${12 * zoomLevel}px Arial`;
+                        ctx.textAlign = 'left';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillText(`(${points[i].x.toFixed(1)}, ${points[i].y.toFixed(1)})`, pos.x + 6 * zoomLevel, pos.y - 2 * zoomLevel);
+                    }
+                    
+                    if (points.length === 2 && label) {
+                        const midX = (points[0].x + points[1].x) / 2;
+                        const midY = (points[0].y + points[1].y) / 2;
+                        const pos = worldToCanvas(midX, midY);
+                        ctx.fillStyle = color;
+                        ctx.font = `${14 * zoomLevel}px Arial`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'top';
+                        ctx.fillText(label, pos.x, pos.y + 8 * zoomLevel);
+                    }
+                }
+            }
+            
+            // Draw center point
+            function drawCenter(centerX, centerY) {
+                const pos = worldToCanvas(centerX, centerY);
+                ctx.fillStyle = CENTER_COLOR;
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 8 * zoomLevel, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2 * zoomLevel;
+                ctx.stroke();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 1.5 * zoomLevel;
+                ctx.beginPath();
+                ctx.moveTo(pos.x - 6 * zoomLevel, pos.y);
+                ctx.lineTo(pos.x + 6 * zoomLevel, pos.y);
+                ctx.moveTo(pos.x, pos.y - 6 * zoomLevel);
+                ctx.lineTo(pos.x, pos.y + 6 * zoomLevel);
+                ctx.stroke();
+            }
+            
+            // Update results display
+            function updateResults(original, rotated, center) {
+                const objectType = objectTypeSelect.value;
+                if (objectType === 'point') {
+                    originalObject.textContent = `(${original[0].x}, ${original[0].y})`;
+                    rotatedObject.textContent = `(${rotated[0].x.toFixed(2)}, ${rotated[0].y.toFixed(2)})`;
+                } else if (objectType === 'line') {
+                    originalObject.textContent = getLineEquationString();
+                    rotatedObject.textContent = getRotatedLineEquation(original, rotated);
+                } else {
+                    let originalStr = '';
+                    let rotatedStr = '';
+                    for (let i = 0; i < original.length; i++) {
+                        originalStr += `(${original[i].x}, ${original[i].y})`;
+                        rotatedStr += `(${rotated[i].x.toFixed(2)}, ${rotated[i].y.toFixed(2)})`;
+                        if (i < original.length - 1) {
+                            originalStr += ', ';
+                            rotatedStr += ', ';
+                        }
+                    }
+                    originalObject.textContent = originalStr;
+                    rotatedObject.textContent = rotatedStr;
+                }
+                rotationCenter.textContent = `(${center.x}, ${center.y})`;
+            }
+            
+            // Get current object data
+            function getCurrentObjectData() {
+                const objectType = objectTypeSelect.value;
+                if (objectType === 'point') {
+                    const x = parseFloat(document.getElementById('pointX').value);
+                    const y = parseFloat(document.getElementById('pointY').value);
+                    return [{x: x, y: y}];
+                } else if (objectType === 'line') {
+                    return getLinePointsFromEquation();
+                } else if (objectType === 'polygon') {
+                    const polyXInputs = document.querySelectorAll('.poly-x');
+                    const polyYInputs = document.querySelectorAll('.poly-y');
+                    const points = [];
+                    for (let i = 0; i < polyXInputs.length; i++) {
+                        const x = parseFloat(polyXInputs[i].value);
+                        const y = parseFloat(polyYInputs[i].value);
+                        points.push({x: x, y: y});
+                    }
+                    return points;
+                }
+            }
+            
+            // Get rotated object data
+            function getRotatedObjectData(original, centerX, centerY, angle) {
+                let rotated = [];
+                for (let point of original) {
+                    rotated.push(rotatePoint(point, centerX, centerY, angle));
+                }
+                return rotated;
+            }
+            
+            // Live preview function
+            function updateLivePreview() {
+                const objectType = objectTypeSelect.value;
+                const centerX = parseFloat(centerXInput.value);
+                const centerY = parseFloat(centerYInput.value);
+                const angle = parseFloat(angleInput.value);
+                const original = getCurrentObjectData();
+                const rotated = getRotatedObjectData(original, centerX, centerY, angle);
+                
+                updateResults(original, rotated, {x: centerX, y: centerY});
+                
+                simAngle.textContent = `${angle}°`;
+                simCenterX.textContent = centerX;
+                simCenterY.textContent = centerY;
+                simObjectType.textContent = objectTypeSelect.options[objectTypeSelect.selectedIndex].text;
+                
+                drawGrid();
+                
+                if (objectType === 'line') {
+                    const originalEq = getLineEquationString();
+                    const rotatedEq = getRotatedLineEquation(original, rotated);
+                    drawObject(original, ORIGINAL_COLOR, false, originalEq);
+                    drawObject(rotated, ROTATED_COLOR, true, rotatedEq);
+                } else {
+                    drawObject(original, ORIGINAL_COLOR);
+                    drawObject(rotated, ROTATED_COLOR, true);
+                }
+                
+                drawCenter(centerX, centerY);
+            }
+            
+            // Event listeners for live preview
+            allInputs.forEach(input => {
+                input.addEventListener('input', updateLivePreview);
+            });
+            
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('poly-x') || e.target.classList.contains('poly-y')) {
+                    updateLivePreview();
+                }
+            });
+            
+            // Initialize
+            updateInputFields();
+            updateLineForms();
+            updateLivePreview();
+        });
+    </script>
+</body>
+</html>

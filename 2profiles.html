@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Anggota Kelompok 1_XI-2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding-top: 70px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+        
+        /* Fixed Navbar with Hamburger */
+        .container-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2c3e50, #4a6583);
+            padding: 15px 30px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-title {
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 22px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+            appearance: none;
+        }
+        
+        .hamburger span {
+            width: 100%;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+            transform-origin: center;
+        }
+        
+        .nav-menu {
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 10px 0;
+            min-width: 180px;
+            display: none;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nav-menu.active {
+            display: block;
+        }
+        
+        .nav-item {
+            padding: 10px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: block;
+            transition: all 0.2s;
+            border-radius: 5px;
+            margin: 2px 0;
+        }
+        
+        .nav-item:hover {
+            background: #e3f2fd;
+            color: #3498db;
+            transform: translateX(5px);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6583);
+            color: white;
+            padding: 32px 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .back-button {
+            background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 16px;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(156, 39, 176, 0.6);
+        }
+        
+        .content {
+            padding: 40px;
+            min-height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .profile-section {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+            height: 450px;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .profile-image-container {
+            width: 35%;
+            position: relative;
+            overflow: hidden;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .profile-section:hover .profile-image {
+            transform: scale(1.02);
+        }
+        
+        .profile-info-container {
+            width: 65%;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .profile-name {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+            line-height: 1.3;
+        }
+        
+        .info-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .info-label {
+            font-weight: 700;
+            color: #2c3e50;
+            min-width: 160px;
+            font-size: 1.1rem;
+            margin-right: 16px;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-label::before {
+            content: '•';
+            margin-right: 8px;
+            color: #e74c3c;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .info-value {
+            font-size: 1.1rem;
+            color: #34495e;
+            flex: 1;
+            line-height: 1.5;
+        }
+        
+        .instagram-value {
+            font-size: 1.1rem;
+            color: #34495e;
+            flex: 1;
+            line-height: 1.5;
+        }
+        
+        .instagram-value a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .instagram-value a:hover {
+            color: #c0392b;
+            text-decoration: underline;
+        }
+        
+        .motivation-container {
+            margin-top: 24px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 12px;
+            border-left: 5px solid #2196f3;
+            box-shadow: 0 3px 10px rgba(33, 150, 243, 0.1);
+        }
+        
+        .motivation-title {
+            font-weight: 700;
+            color: #1565c0;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .motivation-title::before {
+            content: '✨';
+            margin-right: 8px;
+        }
+        
+        .motivation-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #0d47a1;
+            font-style: italic;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid #1976d2;
+        }
+        
+        /* Navigation arrows */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 18px rgba(102, 126, 234, 0.6);
+        }
+        
+        .prev-arrow {
+            left: 15px;
+        }
+        
+        .next-arrow {
+            right: 15px;
+        }
+        
+        @media (max-width: 1024px) {
+            .profile-section {
+                height: 400px;
+            }
+            
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 60px;
+            }
+            
+            header {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 2.0rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .profile-section {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .profile-image-container {
+                width: 100%;
+                height: 300px;
+            }
+            
+            .profile-info-container {
+                width: 100%;
+                padding: 25px 20px;
+            }
+            
+            .profile-name {
+                font-size: 1.6rem;
+            }
+            
+            .info-label {
+                min-width: 140px;
+                font-size: 1.0rem;
+            }
+            
+            .info-value, .instagram-value, .motivation-text {
+                font-size: 1.0rem;
+            }
+            
+            .nav-arrow {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+            
+            .prev-arrow {
+                left: 10px;
+            }
+            
+            .next-arrow {
+                right: 10px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .container-navbar {
+                padding: 12px 20px;
+            }
+            
+            .header-title {
+                font-size: 1.3rem;
+            }
+            
+            .hamburger {
+                width: 20px;
+                height: 16px;
+            }
+            
+            .hamburger span {
+                height: 2px;
+            }
+            
+            .nav-menu {
+                top: 50px;
+                right: 20px;
+                width: 160px;
+                font-size: 0.95rem;
+            }
+            
+            .container {
+                margin-top: 10px;
+            }
+            
+            .profile-image-container {
+                height: 250px;
+            }
+            
+            .info-label {
+                min-width: 120px;
+                font-size: 0.9rem;
+            }
+            
+            .info-value, .instagram-value, .motivation-text {
+                font-size: 0.9rem;
+            }
+            
+            .nav-arrow {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Navbar with Hamburger Menu -->
+    <div class="container-navbar">
+        <a href="index.html" class="header-title">&lt;Aregy/&gt;</a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-menu" id="navMenu">
+            <a href="1gjb.html" class="nav-item">Gerak Jatuh Bebas</a>
+            <a href="2rotasi.html" class="nav-item">Rotasi Geometri</a>
+            <a href="3matrix.html" class="nav-item">Operasi Matriks</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>PROFIL ANGGOTA<br>😝KELOMPOK TRIPLE KILL🤙🏻</h1>
+            <p class="subtitle">Halo, Sobat Voltrix! Kenalan yuk sama anggota Kelompok Triple Kill!</p>
+            <a href="1gjb.html" class="back-button">Kembali ke Simulasi</a>
+        </header>
+        
+        <div class="content">
+            <!-- Navigation arrows -->
+            <button class="nav-arrow prev-arrow" id="prevBtn">←</button>
+            <button class="nav-arrow next-arrow" id="nextBtn">→</button>
+            
+            <!-- Profile 1 -->
+            <div id="argyanto" class="profile-section member-content active">
+                <div class="profile-image-container">
+                    <img src="images/argy.jpg" alt="Argyanto Nandana N." class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Argyanto Nandana Nugraha</h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">03</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/argyjustice" target="_blank">@argyjustice</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"Work, life, Mobile Legends."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile 2 -->
+            <div id="felix" class="profile-section member-content" style="display: none;">
+                <div class="profile-image-container">
+                    <img src="images/danis.jpg" alt="Felix Kristiawan S." class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Daniswara Satya Santika Loka</h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">08</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/dniswaraloka" target="_blank">@dniswaraloka</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"New year new me."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile 3 -->
+            <div id="meysa" class="profile-section member-content" style="display: none;">
+                <div class="profile-image-container">
+                    <img src="images/hilwa.jpeg" alt="Meysa Amelia P." class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Hilwa Nur Arifah Ilmiah</h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">15</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/_hailwwa" target="_blank">@_hailwwa</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"Makan enak."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile 4 -->
+            <div id="tegar" class="profile-section member-content" style="display: none;">
+                <div class="profile-image-container">
+                    <img src="images/marcel.jpeg" alt="Tegar Achmad" class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Marcel Nilam Imanuel</h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">19</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/marcelnilam" target="_blank">@marcelnilam</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"Bahagia tak perlu megah, cukup ketawa ajah."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile 5 -->
+            <div id="zenobia" class="profile-section member-content" style="display: none;">
+                <div class="profile-image-container">
+                    <img src="images/mario.jpeg" alt="Zenobia Mada S.E." class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Mario Novanno Bastian </h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">20</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/supermario.n.b.11" target="_blank">@supermario.n.b.11</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"Sisen depan pasti immortal."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile 6 -->
+            <div id="member6" class="profile-section member-content" style="display: none;">
+                <div class="profile-image-container">
+                    <img src="images/meysa2.jpeg" alt="Anggota Baru 1" class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Meysa Amelia Putri</h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">21</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/mes4_y" target="_blank">@mes4_y</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"Naik sc 10 pake ghostfinn."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile 7 -->
+            <div id="member7" class="profile-section member-content" style="display: none;">
+                <div class="profile-image-container">
+                    <img src="images/alex.jpeg" alt="Anggota Baru 2" class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Muhammad Alaik Ni'amul Ziddan</h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">23</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/kaijuu_zero" target="_blank">@kaijuu_zero</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"Aku benci Senin."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile 8 -->
+            <div id="member8" class="profile-section member-content" style="display: none;">
+                <div class="profile-image-container">
+                    <img src="images/reza.jpg" alt="Anggota Baru 3" class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Muhammad Reza Akbar Rahmadian </h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">27</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/dianrzaa" target="_blank">@dianrzaa</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"Dilakoni ae."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile 9 -->
+            <div id="member9" class="profile-section member-content" style="display: none;">
+                <div class="profile-image-container">
+                    <img src="images/ridho.jpeg" alt="Anggota Baru 4" class="profile-image">
+                </div>
+                <div class="profile-info-container">
+                    <h2 class="profile-name">Rizky Ridho Maulana</h2>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Nomor Absen:</span>
+                        <p class="info-value">32</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Instagram:</span>
+                        <p class="instagram-value"><a href="https://instagram.com/rrmbujank" target="_blank">@rrmbujank</a></p>
+                    </div>
+                    
+                    <div class="motivation-container">
+                        <div class="motivation-title">Motivasi Hidup</div>
+                        <p class="motivation-text">"Hidup itu dibawa santai saja."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger Menu Functionality
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const navMenu = document.getElementById('navMenu');
+            const spans = hamburgerBtn.querySelectorAll('span');
+            
+            hamburgerBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+                
+                // Animate hamburger icon
+                if (navMenu.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                    hamburgerBtn.setAttribute('aria-expanded', 'true');
+                } else {
+                    spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!hamburgerBtn.contains(event.target) && !navMenu.contains(event.target) && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Close menu when resizing to larger screen
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 600 && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Navigation arrows functionality
+            const profileContents = document.querySelectorAll('.member-content');
+            const memberIds = ['argyanto', 'felix', 'meysa', 'tegar', 'zenobia', 'member6', 'member7', 'member8', 'member9'];
+            let currentIndex = 0;
+            
+            function showProfile(index) {
+                profileContents.forEach(profile => {
+                    profile.style.display = 'none';
+                });
+                profileContents[index].style.display = 'flex';
+                currentIndex = index;
+            }
+            
+            document.getElementById('prevBtn').addEventListener('click', function() {
+                currentIndex = (currentIndex - 1 + memberIds.length) % memberIds.length;
+                showProfile(currentIndex);
+            });
+            
+            document.getElementById('nextBtn').addEventListener('click', function() {
+                currentIndex = (currentIndex + 1) % memberIds.length;
+                showProfile(currentIndex);
+            });
+            
+            const profileImages = document.querySelectorAll('.profile-image');
+            profileImages.forEach(img => {
+                img.onerror = function() {
+                    this.src = 'https://via.placeholder.com/300x400/3498db/ffffff?text=Foto+Anggota';
+                    this.alt = 'Foto tidak tersedia';
+                };
+            });
+            
+            const firstProfile = document.querySelector('.member-content');
+            if (firstProfile) {
+                firstProfile.style.opacity = '0';
+                firstProfile.style.transform = 'translateX(-30px)';
+                setTimeout(() => {
+                    firstProfile.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    firstProfile.style.opacity = '1';
+                    firstProfile.style.transform = 'translateX(0)';
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
+
