@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendidikan Pancasila - Kelompok Pendidikan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding-top: 70px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-bottom: 40px;
+        }
+
+        /* Fixed Navbar with Hamburger */
+        .container-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2c3e50, #4a6583);
+            padding: 15px 30px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 22px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+            appearance: none;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+            transform-origin: center;
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 10px 0;
+            min-width: 180px;
+            display: none;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-menu.active {
+            display: block;
+        }
+        .nav-item {
+            padding: 10px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: block;
+            transition: all 0.2s;
+            border-radius: 5px;
+            margin: 2px 0;
+        }
+        
+        .nav-item:hover {
+            background: #e3f2fd;
+            color: #3498db;
+            transform: translateX(5px);
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6583);
+            color: white;
+            padding: 40px 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .team-section {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px auto 0;
+            max-width: 700px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .team-title {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #ffd700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            font-weight: 600;
+        }
+
+        .profiles-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            display: inline-block;
+            margin: 16px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profiles-button:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .profiles-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .profiles-button:hover::before {
+            left: 100%;
+        }
+        .content {
+            display: flex;
+            padding: 40px 50px;
+            gap: 40px;
+            min-height: 600px;
+        }
+        .controls {
+            flex: 1;
+            min-width: 400px;
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .results-section {
+            flex: 2;
+            min-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-display {
+            background: #f8f9fa;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 1.7rem;
+            color: #2c3e50;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 600;
+
+        }
+        .input-group {
+            margin-bottom: 24px;
+
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .operation-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            width: 100%;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+        
+        .operation-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .formula {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 6px solid #ffc107;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+            margin-top: 20px;
+        }
+
+        .formula-title {
+            font-weight: 700;
+            color: #ff9800;
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .formula-title::before {
+            content: '📌';
+            margin-right: 8px;
+        }
+
+        .formula-content {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: rgba(255,255,255,0.7);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 1.6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: #333;
+        }
+
+        .sub-bab-section {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px dashed #e9ecef;
+            scroll-margin-top: 100px; /* Agar tidak tertutup navbar saat di-klik */
+        }
+
+        .sub-bab-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .materi-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        .video-container {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            margin-top: 24px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .menu-link {
+            display: block;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .menu-link:hover {
+            background: #e3f2fd;
+            color: #3498db;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 1200px) {
+        .content {
+            flex-direction: column;
+            padding: 30px;
+        }
+        .controls, .results-section {
+            min-width: auto;
+            width: 100%;
+        }
+        }
+        @media (max-width: 768px) {
+        body {
+            padding: 20px 10px 60px;
+            padding-top: 70px;
+        }
+        header {
+            padding: 25px 20px;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+        }
+        .content {
+            padding: 20px;
+        }
+        .controls, .results-section {
+            padding: 20px;
+        }
+        .section-title {
+            font-size: 1.4rem;
+        }
+        }
+        @media (max-width: 600px) {
+        body {
+            padding-top: 60px;
+        }
+        .container-navbar {
+            padding: 12px 20px;
+        }
+        .header-title {
+            font-size: 1.3rem;
+        }
+        .hamburger {
+            width: 20px;
+            height: 16px;
+        }
+        .hamburger span {
+            height: 2px;
+        }
+        .nav-menu {
+            top: 50px;
+            right: 20px;
+            width: 160px;
+            font-size: 0.95rem;
+        }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Fixed Navbar with Hamburger Menu -->
+    <div class="container-navbar">
+        <a href="index.html" class="header-title">&lt;Aregy/&gt;</a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-menu" id="navMenu">
+            <a href="1gjb.html" class="nav-item">Gerak Jatuh Bebas</a>
+            <a href="2rotasi.html" class="nav-item">Rotasi Geometri</a>
+            <a href="3matrix.html" class="nav-item">Operasi Matriks</a>
+            <a href="4pancasila.html" class="nav-item">Materi Pendidikan Pancasila</a>
+        </nav>
+    </div>
+
+<div class="container">
+  <header>
+    <h1>Pendidikan Pancasila</h1>
+    <p class="subtitle">Hai, Sobat Pancasila! Yuk, pelajari nilai-nilai luhur bangsa, mulai dari dasar negara, ideologi, identitas nasional, HAM, hingga demokrasi Pancasila melalui materi interaktif ini!✨</p>
+    <div class="team-section">
+      <h2 class="team-title">🫡KELOMPOK SIAP GRAK!🫡</h2>
+      <a href="4profiles.html" class="profiles-button">👤 Lihat Profil Anggota Kelompok</a>
+    </div>
+  </header>
+  
+  <div class="content">
+    <!-- Sidebar / Daftar Isi -->
+    <div class="controls">
+      <h2 class="section-title">Daftar Sub Bab</h2>
+      <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">Klik materi di bawah ini untuk langsung menuju ke pembahasan:</p>
+      
+      <a href="#dasar" class="menu-link">1. Pancasila sebagai Dasar Negara</a>
+      <a href="#ideologi" class="menu-link">2. Pancasila sebagai Ideologi Negara</a>
+      <a href="#identitas" class="menu-link">3. Pancasila sebagai Identitas Nasional</a>
+      <a href="#ham" class="menu-link">4. Hak Asasi Manusia (HAM)</a>
+      <a href="#demokrasi" class="menu-link">5. Demokrasi Pancasila</a>
+
+      <div class="formula">
+        <div class="formula-title">💡 Pengingat Penting</div>
+        <div class="formula-content">
+          "Pancasila bukan hanya sekadar hafalan, melainkan pedoman hidup dan cara pandang bangsa Indonesia dalam menjalani kehidupan berbangsa dan bernegara."
+        </div>
+      </div>
+    </div>
+
+    <!-- Konten Materi -->
+    <div class="results-section">
+      <h2 class="section-title">Materi Pembelajaran</h2>
+
+      <!-- Sub Bab 1 -->
+      <div id="dasar" class="sub-bab-section">
+        <h3 class="section-title">1. Pancasila sebagai Dasar Negara</h3>
+        <p class="materi-text">
+            Pancasila sebagai dasar negara mengandung pengertian bahwa setiap sendi-sendi ketatanegaraan harus berdasar pada nilai-nilai Pancasila. Dengan kata lain, Pancasila harus senantiasa menjadi spirit dalam bernegara. Pancasila sebagai dasar negara dinyatakan oleh Sukarno dalam pidatonya pada hari terakhir sidang pertama BPUPK tanggal 1 Juni 1945. Salah satu isi pidatonya ialah menjadikan Pancasila sebagai dasar falsafah bangsa atau <i>filosofische grondslag</i> bagi bangsa Indonesia yang merdeka. Usulan Sukarno tersebut diterima dengan baik oleh seluruh anggota sidang BPUPK (BPIP, 2020: 65).<br><br>
+            Oleh karena itu, jika kata Pancasila sebagai dasar negara dihilangkan, runtuhlah negara Indonesia yang berdiri di atasnya. Hal ini tertuang dalam Undang-Undang Nomor 15 Tahun 2019 tentang Perubahan atas Undang-Undang Nomor 12 Tahun 2011. Regulasi ini kemudian direvisi dan lahirlah Undang-Undang Nomor 13 Tahun 2022 tentang Pembentukan Peraturan Perundang-Undangan.<br><br>
+            Berdasarkan peraturan ini, kita dapat mengetahui kedudukan Pancasila sebagai dasar negara dan sumber dari segala sumber hukum di Indonesia. Kedudukan Pancasila sebagai sumber dari segala sumber hukum berimplikasi bahwa seluruh peraturan perundang-undangan di Indonesia tidak boleh bertentangan dengan Pancasila.<br><br>
+            Sesuai dengan pengertiannya, seluruh peraturan perundang-undangan merupakan sebuah tatanan yang dibuat untuk mengatur kehidupan bernegara. Peraturan tersebut dibuat agar kehidupan warga negara Indonesia berjalan dengan baik. Jika ada warga negara yang melanggar peraturan, akan diberikan hukuman/sanksi sesuai dengan pelanggaran hukum yang dilakukannya. Sanksi atau hukuman yang terdapat dalam suatu peraturan perundang-undangan dapat dimaknai sebagai alat pemaksa yang membuat seseorang harus menaati peraturan tersebut.
+        </p>
+        
+        <div class="formula">
+          <div class="formula-title">Pancasila sebagai dasar negara memiliki kedudukan sebagai berikut:</div>
+          <div class="formula-content">
+            a. Sumber dari segala sumber hukum di Indonesia<br>
+            b. Mencakup suasana kebatinan Undang-Undang Dasar Tahun 1945<br>
+            c. Mewujudkan cita-cita hukum bagi hukum dasar negara<br>
+            d. Menjadi sumber semangat bagi Undang-Undang Dasar Tahun 1945<br>
+            e. Mengandung norma-norma yang mengharuskan Undang-Undang Dasar Tahun 1945 mewajibkan perintah maupun penyelenggara negara lain untuk memelihara budi pekerti luhur.
+          </div>
+        </div>
+
+        <div class="video-container">
+          <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Pancasila sebagai Dasar Negara</h4>
+          <!-- Ganti URL embed YouTube di bawah ini dengan video yang sesuai -->
+          <iframe src="https://www.youtube.com/watch?v=P04-IVbQrBQ" title="Pancasila Sebagai Dasar Negara" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Sub Bab 2 -->
+      <div id="ideologi" class="sub-bab-section">
+        <h3 class="section-title">2. Pancasila sebagai Ideologi Negara</h3>
+        <p class="materi-text">
+            Ideologi berasal dari bahasa Yunani, yaitu <i>ideos</i> yang bermakna ide dan <i>logos</i> yang bermakna ilmu pengetahuan. Secara umum, ideologi dapat didefinisikan sebagai kumpulan ide, gagasan, keyakinan, kepercayaan yang menyeluruh, yang mengatur tingkah laku manusia dalam berbagai sendi kehidupan.<br><br>
+            Dalam konteks ideologi negara, Pancasila dapat diartikan sebagai sistem kehidupan nasional yang mencakup dimensi politik, ekonomi, sosio-kultural, pertahanan, dan keamanan untuk mencapai tujuan negara yang didasarkan pada dasar negara. Oleh karena itu, dalam konteks ini, Pancasila harus dijadikan sebagai bintang penuntun dalam penyelenggaraan politik ketatanegaraan, ekonomi, hukum, sosial-budaya, dan pertahanan- keamanan negara, termasuk pula politik luar negeri (BPIP, 2020: 60).<br><br>
+            Pancasila sebagai ideologi negara juga dapat diartikan sebagai seperangkat pemikiran yang berasal dari pengalaman kehidupan bangsa Indonesia yang diyakini kebenarannya lantaran mampu menjaga kehidupan bangsa. Pancasila mengandung nilai-nilai yang menuntun bangsa Indonesia merealisasikan kehidupan masyarakat yang adil dan makmur (BPIP, 2020: 61).
+        </p>
+
+        <div class="video-container">
+          <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Pancasila sebagai Ideologi Negara</h4>
+          <iframe src="https://www.youtube.com/watch?v=ku9I5jNzhF0" title="Video Pancasila sebagai Ideologi Negara" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Sub Bab 3 -->
+      <div id="identitas" class="sub-bab-section">
+        <h3 class="section-title">3. Pancasila sebagai Identitas Nasional</h3>
+        <p class="materi-text">
+            Pancasila sebagai identitas nasional mengandung pengertian bahwa Pancasila merupakan jati diri, ciri khas, dan karakter bangsa Indonesia yang membedakannya dari bangsa-bangsa lain. Identitas nasional merupakan sesuatu yang melekat pada suatu bangsa dan menjadi gambaran mengenai siapa bangsa tersebut. Dalam hal ini, nilai-nilai yang terkandung dalam Pancasila mencerminkan kepribadian dan karakter masyarakat Indonesia.<br><br>
+            Pancasila tidak hanya berfungsi sebagai dasar dalam penyelenggaraan negara, tetapi juga menjadi pedoman dalam membentuk sikap dan perilaku masyarakat Indonesia. Kelima sila Pancasila mengandung nilai-nilai yang telah menjadi bagian penting dalam kehidupan bangsa Indonesia, seperti nilai ketuhanan, kemanusiaan, persatuan, musyawarah, dan keadilan. Nilai-nilai tersebut menjadi landasan dalam kehidupan bermasyarakat, berbangsa, dan bernegara.<br><br>
+            Sebagai identitas nasional, Pancasila memiliki hubungan yang erat dengan keberagaman bangsa Indonesia. Indonesia terdiri atas berbagai suku, agama, bahasa, budaya, dan adat istiadat. Keberagaman tersebut dapat menjadi kekuatan apabila disatukan oleh nilai yang dapat diterima oleh seluruh masyarakat. Pancasila menjadi salah satu pemersatu tersebut karena nilai-nilainya dapat menjadi dasar bersama bagi seluruh rakyat Indonesia tanpa membedakan latar belakang.<br><br>
+            Pancasila sebagai identitas nasional juga berarti bahwa kehidupan bangsa Indonesia seharusnya mencerminkan nilai-nilai Pancasila. Misalnya, menghormati kebebasan beragama mencerminkan sila pertama, menghargai sesama manusia mencerminkan sila kedua, menjaga persatuan di tengah perbedaan mencerminkan sila ketiga, menyelesaikan permasalahan melalui musyawarah mencerminkan sila keempat, serta berlaku adil dan membantu mewujudkan kesejahteraan bersama mencerminkan sila kelima.<br><br>
+            Dengan demikian, Pancasila tidak hanya menjadi simbol atau hafalan lima sila, tetapi menjadi gambaran mengenai karakter yang diharapkan dimiliki oleh bangsa Indonesia. Apabila masyarakat menerapkan nilai-nilai Pancasila dalam kehidupan sehari-hari, identitas bangsa Indonesia akan tetap kuat meskipun menghadapi perkembangan zaman, globalisasi, dan masuknya berbagai budaya dari luar.<br><br>
+
+        </p>
+        
+        <div class="formula">
+          <div class="formula-title">Pancasila sebagai identitas nasional memiliki fungsi sebagai berikut:</div>
+          <div class="formula-content">
+            a. Menjadi jati diri bangsa Indonesia, karena nilai-nilai Pancasila mencerminkan karakter dan kepribadian bangsa.<br>
+            b. Menjadi ciri khas bangsa Indonesia, yang membedakan Indonesia dengan bangsa atau negara lain.<br>
+            c. Menjadi alat pemersatu bangsa, terutama di tengah keberagaman suku, agama, budaya, bahasa, dan adat istiadat.<br>
+            d. Menjadi pedoman dalam bersikap dan berperilaku, sehingga kehidupan masyarakat sesuai dengan nilai-nilai Pancasila.<br>
+            e. Menjadi penyaring pengaruh budaya asing, sehingga bangsa Indonesia dapat menerima perkembangan dari luar tanpa kehilangan nilai dan jati dirinya.<br>
+            f. Menjadi dasar dalam mempertahankan karakter bangsa, agar identitas dan nilai-nilai luhur bangsa Indonesia tetap terjaga di tengah perkembangan zaman.
+        </div>
+
+        <div class="video-container">
+          <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Pancasila sebagai Identitas Nasional</h4>
+          <iframe src="https://www.youtube.com/watch?v=nlebdrRU4Hc" title="Video Pancasila sebagai Identitas Nasional" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Sub Bab 4 -->
+      <div id="ham" class="sub-bab-section">
+        <h3 class="section-title">4. Hak Asasi Manusia (HAM)</h3>
+        <p class="materi-text">
+            Menurut Undang-Undang RI Nomor 39 tahun 1999, hak asasi manusia adalah <i>seperangkat hak yang melekat pada hakikat dan keberadaan manusia sebagai makhluk Tuhan Yang Maha Esa dan merupakan anugerah-Nya yang wajib dihormati, dijunjung tinggi dan dilindungi oleh negara, hukum, Pemerintah, dan setiap orang demi kehormatan serta perlindungan harkat dan martabat manusia.</i><br><br>
+            Hak asasi manusia merupakan hak yang dimiliki oleh manusia, yang tidak dapat dilanggar dan dipisahkan. Hak asasi manusia bersumber pada pokok pikirannya yang terdapat dalam kitab suci yang menyatakan bahwa manusia diciptakan Tuhan dengan hak dan kewajiban yang sama. Tuhan melarang memperlakukan manusia dengan sewenang-wenang. Tuhan tidak membeda-bedakan manusia dari warna kulit, kaya dan miskin. Tuhan membedakan manusia dari tingkat keimanan dan ketaqwaannya. Sebenarnya yang membedakan manusia karena warna kulit, kaya dan miskin adalah manusia itu sendiri. Dengan demikian, Tuhan sendiri mengakui dan menjamin keberadaan hak asasi manusia tersebut.<br><br>
+            Pengakuan terhadap hak asasi manusia pada hakikatnya merupakan penghargaan atau pengakuan terhadap segala potensi dan harga diri manusia menurut kodratnya. Kendati pun demikian, tidaklah boleh kita lupakan bahwa hakikat tadi tidak hanya mengundang hak untuk menikmati kehidupan secara kodrati. Sebab dalam hakikat kodrati itupun terkandung kewajiban pada diri manusia tersebut. Tuhan memberikan kepada manusia sejumlah hak dasar tadi dengan kewajiban membina dan menyempurnakannya.
+        </p>
+        
+        <div class="formula">
+          <div class="formula-title">Cir-ciri  Hak Asasi Manusia:</div>
+          <div class="formula-content">
+            a. Hakiki, artinya hak asasi manusia adalah adalah hak asasi semua umat manusia yang sudah ada sejak lahir.<br>
+            b. Universal, artinya hak asasi manusia berlaku untuk semua orang tanpa memandang status, suku bangsa, gender atau perbedaan lainnya.<br>
+            c. Tidak dapat dicabut, artinya hak asasi manusia tidak dapat dicabut atau diserahkan kepada pihak lain.<br>
+            d. Tidak dapat dibagi, artinya semua orang berhak mendapatkan semua hak, apakah hak sipil dan politik, atau hak ekonomi, sosial dan budaya.
+          </div>
+        </div>
+
+        <div class="video-container">
+          <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Hak Asasi Manusia</h4>
+          <iframe src="https://www.youtube.com/watch?v=uCeB2XAYcbY" title="Video HAM Pancasila" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Sub Bab 5 -->
+      <div id="demokrasi" class="sub-bab-section">
+        <h3 class="section-title">5. Demokrasi Pancasila</h3>
+        <p class="materi-text">
+            Demokrasi Pancasila merupakan sistem demokrasi yang penyelenggaraan kehidupan bermasyarakat, berbangsa, dan bernegara didasarkan pada nilai-nilai yang terkandung dalam Pancasila dan Undang-Undang Dasar Negara Republik Indonesia Tahun 1945. Demokrasi Pancasila menempatkan rakyat sebagai pemegang kedaulatan, sehingga kekuasaan negara pada dasarnya berasal dari rakyat, dilaksanakan sesuai dengan ketentuan konstitusi, dan ditujukan untuk kepentingan rakyat.<br><br>
+            Demokrasi Pancasila tidak hanya berarti bahwa rakyat dapat memilih pemimpin atau menyampaikan pendapat. Lebih dari itu, demokrasi Pancasila menekankan bahwa pelaksanaan kedaulatan rakyat harus dilakukan dengan berpedoman pada nilai-nilai Pancasila. Oleh karena itu, kebebasan dalam demokrasi tidak dapat digunakan secara semena-mena, tetapi harus disertai tanggung jawab, menghormati hak orang lain, menaati hukum, serta menjaga persatuan dan kepentingan bersama.<br><br>
+            Demokrasi Pancasila memiliki ciri yang berbeda dengan demokrasi yang hanya menekankan kebebasan individu atau keputusan berdasarkan suara terbanyak. Dalam demokrasi Pancasila, musyawarah untuk mencapai mufakat menjadi salah satu prinsip penting, terutama dalam mengambil keputusan bersama. Hal ini sesuai dengan sila keempat Pancasila, yaitu <i>“Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan.”</i> Meskipun demikian, dalam praktik ketatanegaraan Indonesia, pengambilan keputusan juga dapat dilakukan melalui mekanisme pemungutan suara sesuai dengan aturan yang berlaku apabila musyawarah untuk mufakat tidak mencapai kesepakatan.<br><br>
+            Demokrasi Pancasila juga menempatkan hukum dan konstitusi sebagai landasan dalam menjalankan kekuasaan. Indonesia merupakan negara hukum, sehingga pemerintah maupun masyarakat harus bertindak berdasarkan hukum. Kekuasaan tidak boleh digunakan secara sewenang-wenang, dan hak-hak warga negara harus dihormati. Dengan demikian, demokrasi tidak hanya berbicara mengenai kehendak mayoritas, tetapi juga mengenai perlindungan hak setiap warga negara, termasuk kelompok yang berada dalam posisi minoritas.<br><br>
+            Dalam pelaksanaannya, demokrasi Pancasila dapat ditemukan dalam berbagai kehidupan kenegaraan. Pemilihan umum merupakan salah satu bentuk pelaksanaan kedaulatan rakyat karena masyarakat menggunakan hak pilihnya untuk menentukan wakil dan pemimpin. Selain itu, masyarakat memiliki hak untuk menyampaikan pendapat, berkumpul, berserikat, serta berpartisipasi dalam kehidupan politik sesuai dengan ketentuan hukum. Di lingkungan masyarakat dan sekolah, prinsip demokrasi juga dapat diterapkan melalui musyawarah untuk menentukan keputusan bersama.<br><br>
+            Demokrasi Pancasila pada akhirnya bertujuan untuk mewujudkan kehidupan bernegara yang demokratis, adil, dan berlandaskan nilai-nilai Pancasila. Demokrasi tidak hanya bertujuan menghasilkan pemimpin melalui proses pemilihan, tetapi juga memastikan bahwa penyelenggaraan negara memperhatikan kepentingan rakyat, menghormati hak asasi manusia, menjaga persatuan, serta berusaha mewujudkan keadilan sosial.<br><br>.
+        </p>
+        
+        <div class="formula">
+          <div class="formula-title">Prinsip-prinsip Demokrasi Pancasila antara lain:</div>
+          <div class="formula-content">
+            a. Kedaulatan rakyat, yaitu rakyat memiliki kedudukan sebagai pemegang kedaulatan dan berhak berpartisipasi dalam penyelenggaraan negara.<br>
+            b. Musyawarah untuk mufakat, yaitu pengambilan keputusan diupayakan melalui pembahasan bersama dengan mempertimbangkan kepentingan seluruh pihak.<br>
+            c. Persamaan kedudukan, yaitu setiap warga negara memiliki kedudukan yang sama di hadapan hukum dan pemerintahan.<br>
+            d. Kebebasan yang bertanggung jawab, yaitu setiap warga negara memiliki kebebasan untuk berpendapat dan bertindak, tetapi tetap harus menghormati hak orang lain dan menaati hukum.<br>
+            e. Supremasi hukum, yaitu penyelenggaraan negara harus berdasarkan hukum dan tidak boleh dilakukan secara sewenang-wenang.<br>
+            f. Menghormati hak asasi manusia, yaitu pelaksanaan demokrasi harus menjamin dan menghormati hak-hak dasar setiap warga negara.<br>
+            g. Menjaga persatuan dan kesatuan, yaitu perbedaan pendapat dalam demokrasi tidak boleh menyebabkan perpecahan bangsa.<br>
+            h. Mewujudkan keadilan sosial, yaitu penyelenggaraan demokrasi harus diarahkan untuk menciptakan kehidupan masyarakat yang adil dan sejahtera.<br>
+          </div>
+        </div>
+
+        <div class="video-container">
+          <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Demokrasi Pancasila</h4>
+          <iframe src="https://www.youtube.com/watch?v=HOasZwybaig" title="Video Demokrasi Pancasila" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Hamburger Menu Functionality (SAMA PERSIS DENGAN ASLI)
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
+  const spans = hamburgerBtn.querySelectorAll('span');
+  
+  hamburgerBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    navMenu.classList.toggle('active');
+    
+    if (navMenu.classList.contains('active')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      hamburgerBtn.setAttribute('aria-expanded', 'true');
+    } else {
+      spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  
+  document.addEventListener('click', function(event) {
+    if (!hamburgerBtn.contains(event.target) && !navMenu.contains(event.target) && navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 600 && navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      spans[0].style.transform = 'rotate(0deg) translate(0, 0)';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'rotate(0deg) translate(0, 0)';
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
+</script>
+</body>
+</html>
