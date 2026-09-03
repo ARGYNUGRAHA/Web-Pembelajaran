@@ -226,20 +226,6 @@
             gap: 20px;
         }
 
-        .result-display {
-            background: #f8f9fa;
-            padding: 32px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #e9ecef;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
         .section-title {
             font-size: 1.7rem;
             color: #2c3e50;
@@ -247,57 +233,6 @@
             padding-bottom: 12px;
             border-bottom: 3px solid #667eea;
             font-weight: 600;
-
-        }
-        .input-group {
-            margin-bottom: 24px;
-
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 1.1rem;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
-
-        .operation-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            width: 100%;
-            text-decoration: none;
-            text-align: center;
-            display: block;
-        }
-        
-        .operation-btn:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
         }
 
         .formula {
@@ -338,7 +273,7 @@
             margin-bottom: 50px;
             padding-bottom: 40px;
             border-bottom: 2px dashed #e9ecef;
-            scroll-margin-top: 100px; /* Agar tidak tertutup navbar saat di-klik */
+            scroll-margin-top: 100px;
         }
 
         .sub-bab-section:last-child {
@@ -395,63 +330,164 @@
             transform: translateX(5px);
         }
 
-        @media (max-width: 1200px) {
-        .content {
+        /* ==========================================
+           STYLE KHUSUS UNTUK KUIS (MATCHING STYLE)
+           ========================================== */
+        .quiz-container {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            margin-top: 30px;
+        }
+        .quiz-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .question-block {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .question-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .question-text {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+        .options-grid {
+            display: flex;
             flex-direction: column;
-            padding: 30px;
+            gap: 10px;
         }
-        .controls, .results-section {
-            min-width: auto;
-            width: 100%;
+        .option-btn {
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
+        .option-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateX(4px);
+        }
+        /* State Jawaban Benar */
+        .option-btn.correct {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724 !important;
+            font-weight: 600;
+        }
+        /* State Jawaban Salah */
+        .option-btn.incorrect {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24 !important;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        /* Score Tracker di Sidebar */
+        .score-tracker {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            position: sticky;
+            top: 90px;
+        }
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        .score-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                flex-direction: column;
+                padding: 30px;
+            }
+            .controls, .results-section {
+                min-width: auto;
+                width: 100%;
+            }
+            .score-tracker {
+                position: static;
+                margin-bottom: 20px;
+            }
         }
         @media (max-width: 768px) {
-        body {
-            padding: 20px 10px 60px;
-            padding-top: 70px;
-        }
-        header {
-            padding: 25px 20px;
-        }
-        h1 {
-            font-size: 2rem;
-        }
-        .subtitle {
-            font-size: 1.1rem;
-        }
-        .content {
-            padding: 20px;
-        }
-        .controls, .results-section {
-            padding: 20px;
-        }
-        .section-title {
-            font-size: 1.4rem;
-        }
+            body {
+                padding: 20px 10px 60px;
+                padding-top: 70px;
+            }
+            header {
+                padding: 25px 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            .content {
+                padding: 20px;
+            }
+            .controls, .results-section {
+                padding: 20px;
+            }
+            .section-title {
+                font-size: 1.4rem;
+            }
         }
         @media (max-width: 600px) {
-        body {
-            padding-top: 60px;
-        }
-        .container-navbar {
-            padding: 12px 20px;
-        }
-        .header-title {
-            font-size: 1.3rem;
-        }
-        .hamburger {
-            width: 20px;
-            height: 16px;
-        }
-        .hamburger span {
-            height: 2px;
-        }
-        .nav-menu {
-            top: 50px;
-            right: 20px;
-            width: 160px;
-            font-size: 0.95rem;
-        }
+            body {
+                padding-top: 60px;
+            }
+            .container-navbar {
+                padding: 12px 20px;
+            }
+            .header-title {
+                font-size: 1.3rem;
+            }
+            .hamburger {
+                width: 20px;
+                height: 16px;
+            }
+            .hamburger span {
+                height: 2px;
+            }
+            .nav-menu {
+                top: 50px;
+                right: 20px;
+                width: 160px;
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
@@ -495,6 +531,13 @@
       <a href="#ham" class="menu-link">4. Hak Asasi Manusia (HAM)</a>
       <a href="#demokrasi" class="menu-link">5. Demokrasi Pancasila</a>
 
+      <!-- Score Tracker -->
+      <div class="score-tracker">
+        <div class="score-label">🏆 Total Skor Anda</div>
+        <div class="score-value" id="totalScore">0</div>
+        <div class="score-label">dari 30 Poin Maksimal</div>
+      </div>
+
       <div class="formula">
         <div class="formula-title">💡 Pengingat Penting</div>
         <div class="formula-content">
@@ -530,9 +573,11 @@
 
         <div class="video-container">
           <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Pancasila sebagai Dasar Negara</h4>
-          <!-- Ganti URL embed YouTube di bawah ini dengan video yang sesuai -->
           <iframe width="560" height="315" src="https://www.youtube.com/embed/P04-IVbQrBQ?si=hgW9SlzLfq_fTfxw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+
+        <!-- Quiz Container 1 -->
+        <div class="quiz-container" id="quiz-dasar"></div>
       </div>
 
       <!-- Sub Bab 2 -->
@@ -548,6 +593,9 @@
           <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Pancasila sebagai Ideologi Negara</h4>
           <iframe width="560" height="315" src="https://www.youtube.com/embed/ku9I5jNzhF0?si=B09BL3ORWsb7-Ug5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+
+        <!-- Quiz Container 2 -->
+        <div class="quiz-container" id="quiz-ideologi"></div>
       </div>
 
       <!-- Sub Bab 3 -->
@@ -558,8 +606,7 @@
             Pancasila tidak hanya berfungsi sebagai dasar dalam penyelenggaraan negara, tetapi juga menjadi pedoman dalam membentuk sikap dan perilaku masyarakat Indonesia. Kelima sila Pancasila mengandung nilai-nilai yang telah menjadi bagian penting dalam kehidupan bangsa Indonesia, seperti nilai ketuhanan, kemanusiaan, persatuan, musyawarah, dan keadilan. Nilai-nilai tersebut menjadi landasan dalam kehidupan bermasyarakat, berbangsa, dan bernegara.<br><br>
             Sebagai identitas nasional, Pancasila memiliki hubungan yang erat dengan keberagaman bangsa Indonesia. Indonesia terdiri atas berbagai suku, agama, bahasa, budaya, dan adat istiadat. Keberagaman tersebut dapat menjadi kekuatan apabila disatukan oleh nilai yang dapat diterima oleh seluruh masyarakat. Pancasila menjadi salah satu pemersatu tersebut karena nilai-nilainya dapat menjadi dasar bersama bagi seluruh rakyat Indonesia tanpa membedakan latar belakang.<br><br>
             Pancasila sebagai identitas nasional juga berarti bahwa kehidupan bangsa Indonesia seharusnya mencerminkan nilai-nilai Pancasila. Misalnya, menghormati kebebasan beragama mencerminkan sila pertama, menghargai sesama manusia mencerminkan sila kedua, menjaga persatuan di tengah perbedaan mencerminkan sila ketiga, menyelesaikan permasalahan melalui musyawarah mencerminkan sila keempat, serta berlaku adil dan membantu mewujudkan kesejahteraan bersama mencerminkan sila kelima.<br><br>
-            Dengan demikian, Pancasila tidak hanya menjadi simbol atau hafalan lima sila, tetapi menjadi gambaran mengenai karakter yang diharapkan dimiliki oleh bangsa Indonesia. Apabila masyarakat menerapkan nilai-nilai Pancasila dalam kehidupan sehari-hari, identitas bangsa Indonesia akan tetap kuat meskipun menghadapi perkembangan zaman, globalisasi, dan masuknya berbagai budaya dari luar.<br><br>
-
+            Dengan demikian, Pancasila tidak hanya menjadi simbol atau hafalan lima sila, tetapi menjadi gambaran mengenai karakter yang diharapkan dimiliki oleh bangsa Indonesia. Apabila masyarakat menerapkan nilai-nilai Pancasila dalam kehidupan sehari-hari, identitas bangsa Indonesia akan tetap kuat meskipun menghadapi perkembangan zaman, globalisasi, dan masuknya berbagai budaya dari luar.
         </p>
         
         <div class="formula">
@@ -571,12 +618,16 @@
             d. Menjadi pedoman dalam bersikap dan berperilaku, sehingga kehidupan masyarakat sesuai dengan nilai-nilai Pancasila.<br>
             e. Menjadi penyaring pengaruh budaya asing, sehingga bangsa Indonesia dapat menerima perkembangan dari luar tanpa kehilangan nilai dan jati dirinya.<br>
             f. Menjadi dasar dalam mempertahankan karakter bangsa, agar identitas dan nilai-nilai luhur bangsa Indonesia tetap terjaga di tengah perkembangan zaman.
+          </div>
         </div>
 
         <div class="video-container">
           <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Pancasila sebagai Identitas Nasional</h4>
           <iframe width="560" height="315" src="https://www.youtube.com/embed/nlebdrRU4Hc?si=3uyxwajyToRxR6fQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+
+        <!-- Quiz Container 3 -->
+        <div class="quiz-container" id="quiz-identitas"></div>
       </div>
 
       <!-- Sub Bab 4 -->
@@ -603,6 +654,9 @@
           <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Hak Asasi Manusia</h4>
           <iframe width="560" height="315" src="https://www.youtube.com/embed/uCeB2XAYcbY?si=X6h_7jRrZmPsgMI9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+
+        <!-- Quiz Container 4 -->
+        <div class="quiz-container" id="quiz-ham"></div>
       </div>
 
       <!-- Sub Bab 5 -->
@@ -614,7 +668,7 @@
             Demokrasi Pancasila memiliki ciri yang berbeda dengan demokrasi yang hanya menekankan kebebasan individu atau keputusan berdasarkan suara terbanyak. Dalam demokrasi Pancasila, musyawarah untuk mencapai mufakat menjadi salah satu prinsip penting, terutama dalam mengambil keputusan bersama. Hal ini sesuai dengan sila keempat Pancasila, yaitu <i>“Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan.”</i> Meskipun demikian, dalam praktik ketatanegaraan Indonesia, pengambilan keputusan juga dapat dilakukan melalui mekanisme pemungutan suara sesuai dengan aturan yang berlaku apabila musyawarah untuk mufakat tidak mencapai kesepakatan.<br><br>
             Demokrasi Pancasila juga menempatkan hukum dan konstitusi sebagai landasan dalam menjalankan kekuasaan. Indonesia merupakan negara hukum, sehingga pemerintah maupun masyarakat harus bertindak berdasarkan hukum. Kekuasaan tidak boleh digunakan secara sewenang-wenang, dan hak-hak warga negara harus dihormati. Dengan demikian, demokrasi tidak hanya berbicara mengenai kehendak mayoritas, tetapi juga mengenai perlindungan hak setiap warga negara, termasuk kelompok yang berada dalam posisi minoritas.<br><br>
             Dalam pelaksanaannya, demokrasi Pancasila dapat ditemukan dalam berbagai kehidupan kenegaraan. Pemilihan umum merupakan salah satu bentuk pelaksanaan kedaulatan rakyat karena masyarakat menggunakan hak pilihnya untuk menentukan wakil dan pemimpin. Selain itu, masyarakat memiliki hak untuk menyampaikan pendapat, berkumpul, berserikat, serta berpartisipasi dalam kehidupan politik sesuai dengan ketentuan hukum. Di lingkungan masyarakat dan sekolah, prinsip demokrasi juga dapat diterapkan melalui musyawarah untuk menentukan keputusan bersama.<br><br>
-            Demokrasi Pancasila pada akhirnya bertujuan untuk mewujudkan kehidupan bernegara yang demokratis, adil, dan berlandaskan nilai-nilai Pancasila. Demokrasi tidak hanya bertujuan menghasilkan pemimpin melalui proses pemilihan, tetapi juga memastikan bahwa penyelenggaraan negara memperhatikan kepentingan rakyat, menghormati hak asasi manusia, menjaga persatuan, serta berusaha mewujudkan keadilan sosial.<br><br>.
+            Demokrasi Pancasila pada akhirnya bertujuan untuk mewujudkan kehidupan bernegara yang demokratis, adil, dan berlandaskan nilai-nilai Pancasila. Demokrasi tidak hanya bertujuan menghasilkan pemimpin melalui proses pemilihan, tetapi juga memastikan bahwa penyelenggaraan negara memperhatikan kepentingan rakyat, menghormati hak asasi manusia, menjaga persatuan, serta berusaha mewujudkan keadilan sosial.
         </p>
         
         <div class="formula">
@@ -627,7 +681,7 @@
             e. Supremasi hukum, yaitu penyelenggaraan negara harus berdasarkan hukum dan tidak boleh dilakukan secara sewenang-wenang.<br>
             f. Menghormati hak asasi manusia, yaitu pelaksanaan demokrasi harus menjamin dan menghormati hak-hak dasar setiap warga negara.<br>
             g. Menjaga persatuan dan kesatuan, yaitu perbedaan pendapat dalam demokrasi tidak boleh menyebabkan perpecahan bangsa.<br>
-            h. Mewujudkan keadilan sosial, yaitu penyelenggaraan demokrasi harus diarahkan untuk menciptakan kehidupan masyarakat yang adil dan sejahtera.<br>
+            h. Mewujudkan keadilan sosial, yaitu penyelenggaraan demokrasi harus diarahkan untuk menciptakan kehidupan masyarakat yang adil dan sejahtera.
           </div>
         </div>
 
@@ -635,6 +689,9 @@
           <h4 style="margin-bottom: 15px; color: #2c3e50; font-size: 1.1rem;">📺 Video Pembelajaran: Demokrasi Pancasila</h4>
           <iframe width="560" height="315" src="https://www.youtube.com/embed/HOasZwybaig?si=bOcOzo8Pm0rBZStt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+
+        <!-- Quiz Container 5 -->
+        <div class="quiz-container" id="quiz-demokrasi"></div>
       </div>
 
     </div>
@@ -643,7 +700,9 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Hamburger Menu Functionality (SAMA PERSIS DENGAN ASLI)
+  // ==========================================
+  // 1. HAMBURGER MENU FUNCTIONALITY
+  // ==========================================
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const navMenu = document.getElementById('navMenu');
   const spans = hamburgerBtn.querySelectorAll('span');
@@ -684,6 +743,115 @@ document.addEventListener('DOMContentLoaded', function() {
       hamburgerBtn.setAttribute('aria-expanded', 'false');
     }
   });
+
+  // ==========================================
+  // 2. QUIZ DATA & LOGIC
+  // ==========================================
+  let totalScore = 0;
+  const scoreDisplay = document.getElementById('totalScore');
+
+  const quizData = {
+    dasar: [
+      { q: "Pancasila sebagai dasar negara pertama kali diusulkan oleh Ir. Soekarno pada sidang BPUPKI tanggal...", options: ["29 Mei 1945", "1 Juni 1945", "22 Juni 1945", "18 Agustus 1945"], correct: 1 },
+      { q: "Istilah yang digunakan Soekarno untuk menyebut Pancasila sebagai dasar falsafah bangsa adalah...", options: ["Philosophische grondslag", "Weltanschauung", "Staatsfundamentalnorm", "Volkgeist"], correct: 0 },
+      { q: "Undang-Undang yang mengatur tentang Pembentukan Peraturan Perundang-Undangan (revisi dari UU No. 12 Tahun 2011) adalah...", options: ["UU No. 15 Tahun 2019", "UU No. 12 Tahun 2022", "UU No. 13 Tahun 2022", "UU No. 39 Tahun 1999"], correct: 2 },
+      { q: "Jika Pancasila sebagai dasar negara dihilangkan, maka konsekuensinya adalah...", options: ["Negara tetap berjalan normal", "Runtuhlah negara Indonesia yang berdiri di atasnya", "Hanya mengubah nama negara", "Tidak ada dampak signifikan"], correct: 1 },
+      { q: "Kedudukan Pancasila sebagai sumber dari segala sumber hukum berimplikasi bahwa...", options: ["Semua peraturan boleh bertentangan dengan Pancasila", "Peraturan daerah lebih tinggi dari Pancasila", "Seluruh peraturan perundang-undangan tidak boleh bertentangan dengan Pancasila", "Pancasila hanya berlaku untuk pemerintah pusat"], correct: 2 },
+      { q: "Salah satu kedudukan Pancasila sebagai dasar negara adalah mewujudkan...", options: ["Cita-cita hukum bagi hukum dasar negara", "Kekuatan militer terbesar", "Sistem ekonomi kapitalis", "Hegemoni budaya asing"], correct: 0 }
+    ],
+    ideologi: [
+      { q: "Kata 'ideologi' berasal dari bahasa Yunani, yaitu 'ideos' dan 'logos'. Arti 'logos' adalah...", options: ["Gagasan", "Ilmu pengetahuan", "Kumpulan", "Sistem"], correct: 1 },
+      { q: "Secara umum, ideologi dapat didefinisikan sebagai...", options: ["Hukum tertulis negara", "Kumpulan ide, gagasan, keyakinan yang menyeluruh mengatur tingkah laku", "Sistem pemerintahan monarki", "Kumpulan peraturan daerah"], correct: 1 },
+      { q: "Dalam konteks ideologi negara, Pancasila harus dijadikan sebagai... dalam penyelenggaraan politik ketatanegaraan.", options: ["Beban tambahan", "Bintang penuntun", "Hiasan semata", "Penghalang kemajuan"], correct: 1 },
+      { q: "Pancasila sebagai ideologi negara berasal dari...", options: ["Teori negara barat", "Pengalaman kehidupan bangsa Indonesia", "Paksaan penjajah", "Tiruan negara tetangga"], correct: 1 },
+      { q: "Nilai-nilai Pancasila menuntun bangsa Indonesia merealisasikan kehidupan masyarakat yang...", options: ["Adil dan makmur", "Kaya dan berkuasa", "Individualis dan bebas", "Terbelakang dan tertutup"], correct: 0 },
+      { q: "Dimensi kehidupan yang dicakup oleh Pancasila sebagai sistem kehidupan nasional, KECUALI...", options: ["Politik dan Ekonomi", "Sosio-kultural", "Pertahanan dan Keamanan", "Feodalisme dan Penjajahan"], correct: 3 }
+    ],
+    identitas: [
+      { q: "Pancasila sebagai identitas nasional mengandung pengertian bahwa Pancasila merupakan... bangsa Indonesia.", options: ["Hukum pidana", "Jati diri, ciri khas, dan karakter", "Sistem ekonomi", "Alat pemerintahan"], correct: 1 },
+      { q: "Nilai yang mencerminkan sila pertama dalam kehidupan sehari-hari adalah...", options: ["Menjaga persatuan", "Menghormati kebebasan beragama", "Musyawarah mufakat", "Keadilan sosial"], correct: 1 },
+      { q: "Keberagaman suku, agama, dan budaya di Indonesia dapat menjadi kekuatan apabila...", options: ["Dipisahkan satu sama lain", "Disatukan oleh nilai yang dapat diterima seluruh masyarakat (Pancasila)", "Salah satu budaya mendominasi", "Tidak ada interaksi antar suku"], correct: 1 },
+      { q: "Salah satu fungsi Pancasila sebagai identitas nasional adalah menjadi penyaring...", options: ["Makanan pokok", "Pengaruh budaya asing", "Udara bersih", "Arus lalu lintas"], correct: 1 },
+      { q: "Menjaga persatuan di tengah perbedaan mencerminkan pengamalan sila ke-...", options: ["Sila pertama", "Sila kedua", "Sila ketiga", "Sila kelima"], correct: 2 },
+      { q: "Agar identitas bangsa tetap kuat menghadapi globalisasi, masyarakat harus...", options: ["Menolak semua teknologi", "Menerapkan nilai-nilai Pancasila dalam kehidupan sehari-hari", "Mengikuti budaya asing secara membabi buta", "Melupakan sejarah bangsa"], correct: 1 }
+    ],
+    ham: [
+      { q: "Menurut UU RI Nomor 39 Tahun 1999, HAM adalah seperangkat hak yang melekat pada hakikat dan keberadaan manusia sebagai makhluk...", options: ["Sosial semata", "Tuhan Yang Maha Esa", "Ekonomi", "Politik"], correct: 1 },
+      { q: "Menurut pokok pikiran dalam kitab suci, Tuhan membedakan manusia berdasarkan...", options: ["Warna kulit", "Kekayaan", "Tingkat keimanan dan ketaqwaan", "Suku bangsa"], correct: 2 },
+      { q: "Hak untuk hidup serta mempertahankan hidup dan kehidupannya dijamin dalam UUD 1945 Pasal...", options: ["Pasal 28A", "Pasal 28B", "Pasal 28C", "Pasal 28D"], correct: 0 },
+      { q: "Hak membentuk keluarga dan melanjutkan keturunan dijamin dalam UUD 1945 Pasal...", options: ["Pasal 28A", "Pasal 28B", "Pasal 28C", "Pasal 28E"], correct: 1 },
+      { q: "Kebebasan memeluk agama dan kebebasan berserikat dijamin dalam UUD 1945 Pasal...", options: ["Pasal 28D", "Pasal 28C", "Pasal 28E", "Pasal 28F"], correct: 2 },
+      { q: "Hakikat kodrati manusia tidak hanya mengundang hak untuk menikmati kehidupan, tetapi juga terkandung... pada diri manusia tersebut.", options: ["Kewajiban membina dan menyempurnakannya", "Hak untuk melanggar aturan", "Kebebasan mutlak tanpa batas", "Kewenangan menghukum orang lain"], correct: 0 }
+    ],
+    demokrasi: [
+      { q: "Demokrasi Pancasila menempatkan... sebagai pemegang kedaulatan.", options: ["Raja", "Militer", "Rakyat", "Pengusaha"], correct: 2 },
+      { q: "Prinsip penting dalam mengambil keputusan bersama menurut Demokrasi Pancasila adalah...", options: ["Voting paksa", "Musyawarah untuk mencapai mufakat", "Dominasi mayoritas", "Keputusan sepihak pemimpin"], correct: 1 },
+      { q: "Prinsip musyawarah untuk mufakat sesuai dengan sila ke-... Pancasila.", options: ["Sila ke-2", "Sila ke-3", "Sila ke-4", "Sila ke-5"], correct: 2 },
+      { q: "Indonesia merupakan negara hukum, artinya...", options: ["Pemerintah boleh bertindak sewenang-wenang", "Penyelenggaraan negara harus berdasarkan hukum", "Hukum hanya untuk rakyat kecil", "Tidak ada kepastian hukum"], correct: 1 },
+      { q: "Salah satu bentuk pelaksanaan kedaulatan rakyat dalam kehidupan kenegaraan adalah...", options: ["Pemilihan Umum (Pemilu)", "Tawuran antar desa", "Korupsi", "Pelanggaran lalu lintas"], correct: 0 },
+      { q: "Tujuan akhir Demokrasi Pancasila adalah mewujudkan kehidupan bernegara yang demokratis, adil, dan berlandaskan nilai-nilai Pancasila, serta berusaha mewujudkan...", options: ["Keadilan sosial", "Kekayaan penguasa", "Perpecahan bangsa", "Hegemoni asing"], correct: 0 }
+    ]
+  };
+
+  // Fungsi untuk me-render kuis
+  function renderQuizzes() {
+    for (const [section, questions] of Object.entries(quizData)) {
+      const container = document.getElementById(`quiz-${section}`);
+      if (!container) continue;
+
+      let html = `<div class="quiz-title">📝 Latihan Soal: ${section.charAt(0).toUpperCase() + section.slice(1)}</div>`;
+      
+      questions.forEach((q, qIndex) => {
+        html += `
+          <div class="question-block" id="q-${section}-${qIndex}">
+            <div class="question-text">${qIndex + 1}. ${q.q}</div>
+            <div class="options-grid">
+              ${q.options.map((opt, optIndex) => `
+                <button class="option-btn" onclick="checkAnswer('${section}', ${qIndex}, ${optIndex}, ${q.correct}, this)">
+                  ${String.fromCharCode(65 + optIndex)}. ${opt}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+  }
+
+  // Fungsi global untuk mengecek jawaban (harus di-attach ke window agar bisa dipanggil dari HTML string)
+  window.checkAnswer = function(section, qIndex, selectedOpt, correctOpt, btnElement) {
+    const questionBlock = document.getElementById(`q-${section}-${qIndex}`);
+    const buttons = questionBlock.querySelectorAll('.option-btn');
+    
+    // Cek apakah sudah dijawab sebelumnya
+    if (btnElement.disabled) return;
+
+    // Disable semua tombol di soal ini agar tidak bisa diklik lagi
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (selectedOpt === correctOpt) {
+      // Jawaban Benar
+      btnElement.classList.add('correct');
+      totalScore++;
+      scoreDisplay.textContent = totalScore;
+    } else {
+      // Jawaban Salah
+      btnElement.classList.add('incorrect');
+      // Highlight jawaban yang benar
+      buttons[correctOpt].classList.add('correct');
+    }
+
+    // Efek visual tambahan jika skor maksimal tercapai
+    if (totalScore === 30) {
+      scoreDisplay.style.color = '#ffd700';
+      scoreDisplay.textContent = "30 🎉";
+    }
+  };
+
+  // Jalankan render kuis saat halaman dimuat
+  renderQuizzes();
 });
 </script>
 </body>
